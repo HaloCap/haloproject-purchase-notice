@@ -1,41 +1,63 @@
-html, body {
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
   margin: 0;
   padding: 0;
   overflow: visible !important;
-  -ms-overflow-style: none;
   scrollbar-width: none;
+  -ms-overflow-style: none;
+  font-size: 14px;
+}
+html::-webkit-scrollbar {
+  display: none; 
 }
 
 body {
-  font-family: …;
+  margin: 0; 
+  padding: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", sans-serif;
   line-height: 1.6;
   color: #333;
-  padding: 1rem;
+}
+
+:root {
+  --halo-color: #d58754;
+  --max-img: 512px;
+  --container-pad: 1rem;
+  --container-max: 800px;  
 }
 
 .container {
   width: 100%;
+  max-width: var(--container-max);
   margin: 0;
-  padding: 0 1rem;
+  padding: 0 var(--container-pad);
 }
 
-h2 {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 0.3rem;
-}
-
-h3 {
-  font-size: 1.2rem;
+h2, h3 {
   margin-top: 1.5rem;
   padding-bottom: 0.3rem;
+  color: #333;
+}
+h2 {
+  font-size: 1.5rem;
+  border-bottom: 2px solid #eee;
+}
+h3 {
+  font-size: 1.2rem;
+  border-bottom: none;
+}
+@media (max-width: 480px) {
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.1rem; }
 }
 
-.halo-color {
-  color: #d58754;
-}
-
+.halo-color { color: var(--halo-color); }
 .icon {
   width: 1em;
   height: 1em;
@@ -48,22 +70,18 @@ h3 {
   -webkit-overflow-scrolling: touch;
   margin: 0.5rem 0;
 }
-
 table {
   width: 100%;
-  border-collapse: collapse;
   min-width: 300px;
+  border-collapse: collapse;
 }
-
-table, td {
+table, th, td {
   border: 1px solid #ddd;
 }
-
 thead th {
   border: none;
   font-weight: bold;
 }
-
 th, td {
   padding: 0.5rem;
   text-align: center;
@@ -75,28 +93,26 @@ th, td {
   border-collapse: collapse;
   font-size: 0.95rem;
 }
-
 .timeline-table td {
   padding: 0.25rem 0.5rem;
   border: none;
 }
-
 .timeline-table tr + tr td {
   border-top: 1px solid #eee;
 }
-
-ul {
-  padding-left: 1rem;
+@media (max-width: 480px) {
+  .timeline-table {
+    font-size: 0.9rem;
+  }
+  .timeline-table td {
+    padding: 0.2rem 0.4rem;
+  }
 }
 
-.alert {
-  color: #c00;
-  margin: 0.5rem 0;
-}
-
-.warning {
-  margin: 0.5rem 0;
-}
+ul { padding-left: 1rem; }
+.alert { color: #c00; margin: 0.5rem 0; }
+.warning { margin: 0.5rem 0; }
+.footer { margin-top: 2rem; font-size: 0.9rem; }
 
 .step-icons {
   display: flex;
@@ -106,57 +122,37 @@ ul {
   margin: 1.5rem 0;
   width: 100%;
 }
-
-.step-icons div {
-  width: 100%;
-  text-align: center;
-}
-
 .step-icons img {
   width: 90%;
-  max-width: 100%;
+  max-width: var(--max-img);
   height: auto;
   display: block;
   margin: 0 auto 0.5em;
 }
-
-.footer {
-  margin-top: 2rem;
-  font-size: 0.9rem;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
 @media (max-width: 480px) {
-  h2 {
-    font-size: 1.3rem;
-  }
-  h3 {
-    font-size: 1.1rem;
-  }
   .step-icons img {
     width: 100%;
   }
-  .timeline-table {
-    font-size: 0.9rem;
-  }
-  .timeline-table td {
-    padding: 0.2rem 0.4rem;
-  }
-  .container {
+}
+
+img {
+  max-width: var(--max-img);
+  height: auto;
+}
+@media (max-width: 480px) {
+  .container img {
     max-width: 100%;
-    margin: 0 auto;
-    padding: 0 0.75rem;
-  }
-  .iframe-wrapper {
-    padding: 0;
   }
 }
 
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none;
+.half-table {
+  width: 50%;
+  max-width: 50%;
+  margin: 0 auto;
+}
+@media (max-width: 480px) {
+  .half-table {
+    width: 100%;
+    max-width: 100%;
+  }
 }
