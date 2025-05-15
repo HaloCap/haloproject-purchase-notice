@@ -14,8 +14,8 @@ body {
 }
 
 .container {
-  max-width: 600px;
-  margin: auto;
+  width: 100%;
+  margin: 0;
   padding: 0 1rem;
 }
 
@@ -145,6 +145,14 @@ img {
   }
   .timeline-table td {
     padding: 0.2rem 0.4rem;
+  }
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 0.75rem;
+  }
+  .iframe-wrapper {
+    padding: 0;
   }
 }
 
