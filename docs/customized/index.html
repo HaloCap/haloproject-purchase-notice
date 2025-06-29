@@ -16,33 +16,33 @@
     <!-- 1. 款式選擇 -->
     <fieldset class="space-y-2">
       <legend class="font-semibold">1. 請選擇您喜歡的款式（可複選）</legend>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         <!-- 重複這段，替換 img src -->
         <label class="flex items-center space-x-3">
             <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
             <a href="https://www.haloepoch.com/collections/%E5%8D%8A%E5%8D%8A%E8%A8%AD%E8%A8%88%E6%AC%BE" target="_blank" class="flex-shrink-0">
-              <img src="../assets/half.png" alt="半半設計款" class="w-48 h-48 object-cover rounded"/>
+              <img src="../assets/half.png" alt="半半設計款" class="w-full max-w-xs aspect-square object-cover rounded"/>
             </a>
             <span><a href="https://www.haloepoch.com/collections/%E5%8D%8A%E5%8D%8A%E8%A8%AD%E8%A8%88%E6%AC%BE" target="_blank" class="underline text-blue-600">半半設計款</a></span>
         </label>
         <label class="flex items-center space-x-3">
             <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
             <a href="https://www.haloepoch.com/collections/wire" target="_blank" class="flex-shrink-0">
-              <img src="../assets/wire.png" alt="金屬繞線款" class="w-48 h-48 object-cover rounded"/>
+              <img src="../assets/wire.png" alt="金屬繞線款" class="w-full max-w-xs aspect-square object-cover rounded"/>
             </a>
             <span><a href="https://www.haloepoch.com/collections/wire" target="_blank" class="underline text-blue-600">金屬繞線款</a></span>
         </label>
         <label class="flex items-center space-x-3">
             <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
             <a href="https://www.haloepoch.com/collections/%E7%B7%A8%E7%B9%94%E6%AC%BE" target="_blank" class="flex-shrink-0">
-              <img src="../assets/braid.png" alt="編織款" class="w-48 h-48 object-cover rounded"/>
+              <img src="../assets/braid.png" alt="編織款" class="w-full max-w-xs aspect-square object-cover rounded"/>
             </a>
             <span><a href="https://www.haloepoch.com/collections/%E7%B7%A8%E7%B9%94%E6%AC%BE" target="_blank" class="underline text-blue-600">編織款</a></span>
         </label>
         <label class="flex items-center space-x-3">
             <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
             <a href="https://www.haloepoch.com/collections/%E9%8B%BC%E7%B7%9A%E6%AC%BE" target="_blank" class="flex-shrink-0">
-              <img src="../assets/steel.png" alt="鋼線款" class="w-48 h-48 object-cover rounded"/>
+              <img src="../assets/steel.png" alt="鋼線款" class="w-full max-w-xs aspect-square object-cover rounded"/>
             </a>
             <span><a href="https://www.haloepoch.com/collections/%E9%8B%BC%E7%B7%9A%E6%AC%BE" target="_blank" class="underline text-blue-600">鋼線款</a></span>
         </label>
@@ -226,12 +226,19 @@
 
     // 生成 + 手機兼容下載
     document.getElementById('generateBtn').addEventListener('click', () => {
-      html2canvas(document.getElementById('formContainer')).then(canvas => {
+      const container = document.getElementById('formContainer');
+      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const scale = isMobile ? 1 : 2;
+
+      // 顯示等待提示
+      const btn = document.getElementById('generateBtn');
+      btn.disabled = true;
+      btn.textContent = isMobile ? '生成中，請稍後…' : '生成並下載…';
+
+      html2canvas(container, { scale }).then(canvas => {
         const dataURL = canvas.toDataURL('image/png');
-        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
         if (isMobile) {
-          const w = window.open('', '_blank');
-          w.document.write(`
+          window.open('').document.write(`
             <p style="font-family:sans-serif;text-align:center;">
               長按下方圖片並選擇「儲存圖片」<br/><br/>
               <img src="${dataURL}" style="max-width:100%;height:auto;border:1px solid #ccc;"/>
@@ -243,6 +250,10 @@
           link.href = dataURL;
           link.click();
         }
+      }).finally(() => {
+        // 恢復按鈕狀態
+        btn.disabled = false;
+        btn.textContent = '生成並下載摘要圖';
       });
     });
   </script>
