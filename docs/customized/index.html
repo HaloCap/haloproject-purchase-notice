@@ -12,7 +12,7 @@
   </style>
 </head>
 <body class="bg-gray-50 p-6">
-  <div id="formContainer" class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-6">
+  <div id="formContainer" class="w-full max-w-full sm:max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-6 overflow-x-auto">
     <h1 class="text-2xl font-bold text-center"> Halo.Project 手鍊客製化需求單</h1>
     <p class="text-md text-gray-700"> 這份需求單很細節，不要求全部填寫，能填寫盡量填寫即可！</p>
     <p class="text-md text-gray-700"> 我們會更理解你的需求，也能讓你在討論初期就大概知道我們有哪一些樣式可以參考</p>
@@ -25,28 +25,28 @@
         <label class="flex items-center space-x-3">
             <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
             <a href="https://www.haloepoch.com/collections/%E5%8D%8A%E5%8D%8A%E8%A8%AD%E8%A8%88%E6%AC%BE" target="_blank" class="flex-shrink-0">
-              <img src="../assets/half.png" alt="半半設計款" class="w-full max-w-xs aspect-square object-cover rounded"/>
+              <img src="../assets/half.png" alt="半半設計款" class="w-full max-w-xs h-auto object-cover rounded"/>
             </a>
             <span><a href="https://www.haloepoch.com/collections/%E5%8D%8A%E5%8D%8A%E8%A8%AD%E8%A8%88%E6%AC%BE" target="_blank" class="underline text-blue-600">半半設計款</a></span>
         </label>
         <label class="flex items-center space-x-3">
             <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
             <a href="https://www.haloepoch.com/collections/wire" target="_blank" class="flex-shrink-0">
-              <img src="../assets/wire.png" alt="金屬繞線款" class="w-full max-w-xs aspect-square object-cover rounded"/>
+              <img src="../assets/wire.png" alt="金屬繞線款" class="w-full max-w-xs h-auto object-cover rounded"/>
             </a>
             <span><a href="https://www.haloepoch.com/collections/wire" target="_blank" class="underline text-blue-600">金屬繞線款</a></span>
         </label>
         <label class="flex items-center space-x-3">
             <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
             <a href="https://www.haloepoch.com/collections/%E7%B7%A8%E7%B9%94%E6%AC%BE" target="_blank" class="flex-shrink-0">
-              <img src="../assets/braid.png" alt="編織款" class="w-full max-w-xs aspect-square object-cover rounded"/>
+              <img src="../assets/braid.png" alt="編織款" class="w-full max-w-xs h-auto object-cover rounded"/>
             </a>
             <span><a href="https://www.haloepoch.com/collections/%E7%B7%A8%E7%B9%94%E6%AC%BE" target="_blank" class="underline text-blue-600">編織款</a></span>
         </label>
         <label class="flex items-center space-x-3">
             <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
             <a href="https://www.haloepoch.com/collections/%E9%8B%BC%E7%B7%9A%E6%AC%BE" target="_blank" class="flex-shrink-0">
-              <img src="../assets/steel.png" alt="鋼線款" class="w-full max-w-xs aspect-square object-cover rounded"/>
+              <img src="../assets/steel.png" alt="鋼線款" class="w-full max-w-xs h-auto object-cover rounded"/>
             </a>
             <span><a href="https://www.haloepoch.com/collections/%E9%8B%BC%E7%B7%9A%E6%AC%BE" target="_blank" class="underline text-blue-600">鋼線款</a></span>
         </label>
@@ -189,6 +189,16 @@
     </div>
 
     <!-- 生成按鈕 -->
+    <div class="text-center space-y-2">
+      <button id="generateTextBtn"
+              class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+        生成分享文字
+      </button>
+      <textarea name="siteScreenshot" id="shareText"
+                class="w-full border rounded p-3 text-base"
+                rows="8" readonly
+                placeholder="按上面按鈕生成文字，然後長按複製到 IG DM…"></textarea>
+    </div>
     <div class="text-center">
       <button id="generateBtn" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
         生成並下載摘要圖
@@ -228,56 +238,73 @@
       }
     });
 
-    // // 生成 + 手機兼容下載
-    // document.getElementById('generateBtn').addEventListener('click', () => {
-    //   const container = document.getElementById('formContainer');
-    //   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    //   const scale = isMobile ? 1 : 2;
-
-    //   // 顯示等待提示
-    //   const btn = document.getElementById('generateBtn');
-    //   btn.disabled = true;
-    //   btn.textContent = isMobile ? '生成中，請稍後…' : '生成並下載…';
-
-    //   html2canvas(container, { scale }).then(canvas => {
-    //     const dataURL = canvas.toDataURL('image/png');
-    //     if (isMobile) {
-    //       window.open('').document.write(`
-    //         <p style="font-family:sans-serif;text-align:center;">
-    //           長按下方圖片並選擇「儲存圖片」<br/><br/>
-    //           <img src="${dataURL}" style="max-width:100%;height:auto;border:1px solid #ccc;"/>
-    //         </p>
-    //       `);
-    //     } else {
-    //       const link = document.createElement('a');
-    //       link.download = 'bracelet_request.png';
-    //       link.href = dataURL;
-    //       link.click();
-    //     }
-    //   }).finally(() => {
-    //     // 恢復按鈕狀態
-    //     btn.disabled = false;
-    //     btn.textContent = '生成並下載摘要圖';
-    //   });
-    // });
+    // 生成 + 手機兼容下載
     document.getElementById('generateBtn').addEventListener('click', () => {
-        const container = document.getElementById('formContainer');
-        const btn = document.getElementById('generateBtn');
-        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        const scale = isMobile ? 1 : 2;
-        btn.disabled = true;
-        btn.textContent = isMobile ? '生成中，請稍後…' : '生成並下載…';
-        html2canvas(container, { scale }).then(canvas => {
-          const dataURL = canvas.toDataURL('image/png');
-          if (isMobile) {
-            const w = window.open('', '_blank');
-            w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head><body style="margin:0;padding:10px;display:flex;justify-content:center;
-            align-items:center;"><img src="${dataURL}" style="max-width:90vw;height:auto;border:1px solid #ccc;"/></body></html>`);
-          } else {
-            const link = document.createElement('a'); link.download = 'bracelet_request.png'; link.href = dataURL; link.click();
-          }
-        }).finally(() => { btn.disabled = false; btn.textContent = '生成並下載摘要圖'; });
+      const container = document.getElementById('formContainer');
+      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const scale = isMobile ? 1 : 2;
+
+      // 顯示等待提示
+      const btn = document.getElementById('generateBtn');
+      btn.disabled = true;
+      btn.textContent = isMobile ? '生成中，請稍後…' : '生成並下載…';
+
+      html2canvas(container, { scale }).then(canvas => {
+        const dataURL = canvas.toDataURL('image/png');
+        if (isMobile) {
+          window.open('').document.write(`
+            <p style="font-family:sans-serif;text-align:center;">
+              長按下方圖片並選擇「儲存圖片」<br/><br/>
+              <img src="${dataURL}" style="max-width:100%;height:auto;border:1px solid #ccc;"/>
+            </p>
+          `);
+        } else {
+          const link = document.createElement('a');
+          link.download = 'bracelet_request.png';
+          link.href = dataURL;
+          link.click();
+        }
+      }).finally(() => {
+        // 恢復按鈕狀態
+        btn.disabled = false;
+        btn.textContent = '生成並下載摘要圖';
       });
+    });
+    document.getElementById('generateTextBtn').addEventListener('click', () => {
+      const getVals = (selector) =>
+        [...document.querySelectorAll(selector)]
+          .filter(el => el.checked || el.tagName==='SELECT' || el.value)
+          .map(el => {
+            if (el.type==='checkbox'||el.type==='radio') return el.nextElementSibling?.textContent.trim();
+            return el.value;
+          })
+          .filter(Boolean);
+      
+      const summary = [
+        `【款式】 ${getVals('input[name="styles"]:checked').join(', ')}`,
+        `【測驗】 ${document.querySelector('input[name="quiz"]:checked').value}`,
+        document.querySelector('input[name="quiz"]:checked').value==='mbti'
+          ? `【MBTI】: ${document.querySelector('input[name="mbtiType"]').value}` : null,
+        `【網站範例截圖描述】 ${document.querySelector('textarea[name="siteScreenshot"]').value}`,
+        `【喜歡色系】 ${document.querySelector('input[name="colors"]').value}`,
+        `【喜歡水晶】 ${document.querySelector('input[name="crystals"]').value}`,
+        `【象徵意義】 ${document.querySelector('input[name="symbolism"]').value}`,
+        `【主石】 ${document.querySelector('select[name="mainStone"]').value}`,
+        `【子款式】 ${document.getElementById('subOptions')?.value||''}`,
+        `【飾質】 ${document.querySelector('select[name="metalType"]').value}`,
+        `【結尾扣】 ${getVals('input[name="clasp"]:checked').join(', ')}`,
+        `【預算】 ${document.querySelector('input[name="budgetMin"]').value} – ${document.querySelector('input[name="budgetMax"]').value}`,
+        `【送禮】 ${document.querySelector('select[name="isGift"]').value}`,
+        `【時間需求】 ${document.querySelector('input[name="deadline"]').value}`,
+        `【其他備註】 ${document.querySelector('textarea[name="notes"]').value}`,
+      ].filter(Boolean).join('\n');
+
+      const ta = document.getElementById('shareText');
+      ta.value = summary;
+      ta.select();
+      document.execCommand('copy');
+      alert('文字已複製，請貼到 IG DM！');
+    });
   </script>
 </body>
 </html>
