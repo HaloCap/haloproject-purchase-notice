@@ -6,6 +6,10 @@
   <title>Halo.Project 手鍊客製化需求單</title>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* 防止截圖時溢出 */
+    #formContainer { overflow: hidden; }
+  </style>
 </head>
 <body class="bg-gray-50 p-6">
   <div id="formContainer" class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-6">
@@ -224,38 +228,56 @@
       }
     });
 
-    // 生成 + 手機兼容下載
+    // // 生成 + 手機兼容下載
+    // document.getElementById('generateBtn').addEventListener('click', () => {
+    //   const container = document.getElementById('formContainer');
+    //   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    //   const scale = isMobile ? 1 : 2;
+
+    //   // 顯示等待提示
+    //   const btn = document.getElementById('generateBtn');
+    //   btn.disabled = true;
+    //   btn.textContent = isMobile ? '生成中，請稍後…' : '生成並下載…';
+
+    //   html2canvas(container, { scale }).then(canvas => {
+    //     const dataURL = canvas.toDataURL('image/png');
+    //     if (isMobile) {
+    //       window.open('').document.write(`
+    //         <p style="font-family:sans-serif;text-align:center;">
+    //           長按下方圖片並選擇「儲存圖片」<br/><br/>
+    //           <img src="${dataURL}" style="max-width:100%;height:auto;border:1px solid #ccc;"/>
+    //         </p>
+    //       `);
+    //     } else {
+    //       const link = document.createElement('a');
+    //       link.download = 'bracelet_request.png';
+    //       link.href = dataURL;
+    //       link.click();
+    //     }
+    //   }).finally(() => {
+    //     // 恢復按鈕狀態
+    //     btn.disabled = false;
+    //     btn.textContent = '生成並下載摘要圖';
+    //   });
+    // });
     document.getElementById('generateBtn').addEventListener('click', () => {
-      const container = document.getElementById('formContainer');
-      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      const scale = isMobile ? 1 : 2;
-
-      // 顯示等待提示
-      const btn = document.getElementById('generateBtn');
-      btn.disabled = true;
-      btn.textContent = isMobile ? '生成中，請稍後…' : '生成並下載…';
-
-      html2canvas(container, { scale }).then(canvas => {
-        const dataURL = canvas.toDataURL('image/png');
-        if (isMobile) {
-          window.open('').document.write(`
-            <p style="font-family:sans-serif;text-align:center;">
-              長按下方圖片並選擇「儲存圖片」<br/><br/>
-              <img src="${dataURL}" style="max-width:100%;height:auto;border:1px solid #ccc;"/>
-            </p>
-          `);
-        } else {
-          const link = document.createElement('a');
-          link.download = 'bracelet_request.png';
-          link.href = dataURL;
-          link.click();
-        }
-      }).finally(() => {
-        // 恢復按鈕狀態
-        btn.disabled = false;
-        btn.textContent = '生成並下載摘要圖';
+        const container = document.getElementById('formContainer');
+        const btn = document.getElementById('generateBtn');
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const scale = isMobile ? 1 : 2;
+        btn.disabled = true;
+        btn.textContent = isMobile ? '生成中，請稍後…' : '生成並下載…';
+        html2canvas(container, { scale }).then(canvas => {
+          const dataURL = canvas.toDataURL('image/png');
+          if (isMobile) {
+            const w = window.open('', '_blank');
+            w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head><body style="margin:0;padding:10px;display:flex;justify-content:center;
+            align-items:center;"><img src="${dataURL}" style="max-width:90vw;height:auto;border:1px solid #ccc;"/></body></html>`);
+          } else {
+            const link = document.createElement('a'); link.download = 'bracelet_request.png'; link.href = dataURL; link.click();
+          }
+        }).finally(() => { btn.disabled = false; btn.textContent = '生成並下載摘要圖'; });
       });
-    });
   </script>
 </body>
 </html>
