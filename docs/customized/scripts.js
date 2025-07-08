@@ -41,7 +41,21 @@ const copyToClipboard = async (text) => {
       document.getElementById('mbtiInput').classList.toggle('hidden', e.target.value !== 'mbti');
     });
 });
-  
+
+// ----- 預算下限：離開欄位或按 Enter 才檢查 -----
+const minInput = document.querySelector('input[name="budgetMin"]');
+const enforceMin = () => {
+  const v = Number(minInput.value);
+  if (isNaN(v) || v < 1000) minInput.value = 1000;
+};
+minInput.addEventListener('blur', enforceMin);          // 離開欄位
+minInput.addEventListener('keydown', (e) => {           // 按 Enter
+  if (e.key === 'Enter') {
+    enforceMin();
+    minInput.blur();    // 觸發表單默認送出行為前先固定值
+  }
+});
+
 // 主石子選單邏輯
 const subMap = {
     貔貅: ['月光石貔貅', '拉長石貔貅', '紫牙烏貔貅', '黑金骨幹貔貅'],
