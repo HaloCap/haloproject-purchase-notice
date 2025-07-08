@@ -1,0 +1,6 @@
+html {
+    touch-action: manipulation; /* iOS Safari 阻止雙擊放大 */
+}
+#toast.show {
+    opacity: 1;
+}

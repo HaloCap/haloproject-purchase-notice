@@ -1,310 +1,481 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Halo.Project 手鍊客製化需求單</title>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    /* 防止截圖時溢出 */
-    #formContainer { overflow: hidden; }
-  </style>
-</head>
-<body class="bg-gray-50 p-6">
-  <div id="formContainer" class="w-full max-w-full sm:max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-6 overflow-x-auto">
-    <h1 class="text-2xl font-bold text-center"> Halo.Project 手鍊客製化需求單</h1>
-    <p class="text-md text-gray-700"> 這份需求單很細節，不要求全部填寫，能填寫盡量填寫即可！</p>
-    <p class="text-md text-gray-700"> 我們會更理解你的需求，也能讓你在討論初期就大概知道我們有哪一些樣式可以參考</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halo.Project 手鍊客製化需求單</title>
+    <!-- Tailwind 3 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- 1. 款式選擇 -->
-    <fieldset class="space-y-2">
-      <legend class="font-semibold">1. 請選擇您喜歡的款式（可複選）</legend>
-      <div class="grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        <!-- 重複這段，替換 img src -->
-        <label class="flex items-center space-x-3">
-            <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
-            <a href="https://www.haloepoch.com/collections/%E5%8D%8A%E5%8D%8A%E8%A8%AD%E8%A8%88%E6%AC%BE" target="_blank" class="flex-shrink-0">
-              <img src="../assets/half.png" alt="半半設計款" class="w-full max-w-xs h-auto object-cover rounded"/>
+    <!-- 外部樣式表 -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-gray-50 px-4 py-6 sm:px-8">
+    <main
+      id="formContainer"
+      class="mx-auto w-full max-w-xl sm:max-w-3xl rounded-2xl bg-white p-6 sm:p-8 shadow-lg space-y-6"
+    >
+      <!-- Header -->
+      <header class="text-center space-y-2">
+        <h1 class="text-2xl font-bold">Halo.Project 手鍊客製化需求單</h1>
+        <p class="text-sm text-gray-700">
+          這份需求單很細節，不要求全部填寫，能填寫盡量填寫即可！
+        </p>
+        <p class="text-sm text-gray-700">
+          我們會更理解你的需求，也能讓你在討論初期就大概知道我們有哪一些樣式可以參考
+        </p>
+      </header>
+
+      <!-- 1. 款式選擇 Accordion -->
+      <details class="rounded-lg border group" open>
+        <summary
+          class="flex cursor-pointer select-none items-center justify-between rounded-lg bg-gray-100 px-4 py-3 text-base font-semibold hover:bg-gray-200">
+          <span>1. 請選擇您喜歡的款式（可複選）</span>
+          <svg
+            class="h-6 w-6 transition-transform duration-200 group-open:rotate-180"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m19 9-7 7-7-7"
+            />
+          </svg>
+        </summary>
+        <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3">
+          <!-- 半半設計款 -->
+          <div class="space-y-2">
+            <label
+              for="style-half"
+              class="flex items-center gap-2 text-sm cursor-pointer"
+            >
+              <input
+                id="style-half"
+                type="checkbox"
+                name="styles"
+                value="半半設計款"
+                class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              半半設計款
+            </label>
+            <a
+              href="https://www.haloepoch.com/collections/%E5%8D%8A%E5%8D%8A%E8%A8%AD%E8%A8%88%E6%AC%BE"
+              target="_blank"
+              class="block"
+            >
+              <img
+                src="../assets/half.png"
+                alt="半半設計款"
+                loading="lazy"
+                class="h-40 w-full rounded object-cover shadow-sm"
+              />
             </a>
-            <span><a href="https://www.haloepoch.com/collections/%E5%8D%8A%E5%8D%8A%E8%A8%AD%E8%A8%88%E6%AC%BE" target="_blank" class="underline text-blue-600">半半設計款</a></span>
-        </label>
-        <label class="flex items-center space-x-3">
-            <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
-            <a href="https://www.haloepoch.com/collections/wire" target="_blank" class="flex-shrink-0">
-              <img src="../assets/wire.png" alt="金屬繞線款" class="w-full max-w-xs h-auto object-cover rounded"/>
+          </div>
+          <!-- 金屬繞線款 -->
+          <div class="space-y-2">
+            <label
+              for="style-wire"
+              class="flex items-center gap-2 text-sm cursor-pointer"
+            >
+              <input
+                id="style-wire"
+                type="checkbox"
+                name="styles"
+                value="金屬繞線款"
+                class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              金屬繞線款
+            </label>
+            <a
+              href="https://www.haloepoch.com/collections/wire"
+              target="_blank"
+              class="block"
+            >
+              <img
+                src="../assets/wire.png"
+                alt="金屬繞線款"
+                loading="lazy"
+                class="h-40 w-full rounded object-cover shadow-sm"
+              />
             </a>
-            <span><a href="https://www.haloepoch.com/collections/wire" target="_blank" class="underline text-blue-600">金屬繞線款</a></span>
-        </label>
-        <label class="flex items-center space-x-3">
-            <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
-            <a href="https://www.haloepoch.com/collections/%E7%B7%A8%E7%B9%94%E6%AC%BE" target="_blank" class="flex-shrink-0">
-              <img src="../assets/braid.png" alt="編織款" class="w-full max-w-xs h-auto object-cover rounded"/>
+          </div>
+          <!-- 編織款 -->
+          <div class="space-y-2">
+            <label
+              for="style-braid"
+              class="flex items-center gap-2 text-sm cursor-pointer"
+            >
+              <input
+                id="style-braid"
+                type="checkbox"
+                name="styles"
+                value="編織款"
+                class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              編織款
+            </label>
+            <a
+              href="https://www.haloepoch.com/collections/%E7%B7%A8%E7%B9%94%E6%AC%BE"
+              target="_blank"
+              class="block"
+            >
+              <img
+                src="../assets/braid.png"
+                alt="編織款"
+                loading="lazy"
+                class="h-40 w-full rounded object-cover shadow-sm"
+              />
             </a>
-            <span><a href="https://www.haloepoch.com/collections/%E7%B7%A8%E7%B9%94%E6%AC%BE" target="_blank" class="underline text-blue-600">編織款</a></span>
-        </label>
-        <label class="flex items-center space-x-3">
-            <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
-            <a href="https://www.haloepoch.com/collections/%E9%8B%BC%E7%B7%9A%E6%AC%BE" target="_blank" class="flex-shrink-0">
-              <img src="../assets/steel.png" alt="鋼線款" class="w-full max-w-xs h-auto object-cover rounded"/>
+          </div>
+          <!-- 鋼線款 -->
+          <div class="space-y-2">
+            <label
+              for="style-steel"
+              class="flex items-center gap-2 text-sm cursor-pointer"
+            >
+              <input
+                id="style-steel"
+                type="checkbox"
+                name="styles"
+                value="鋼線款"
+                class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              鋼線款
+            </label>
+            <a
+              href="https://www.haloepoch.com/collections/%E9%8B%BC%E7%B7%9A%E6%AC%BE"
+              target="_blank"
+              class="block"
+            >
+              <img
+                src="../assets/steel.png"
+                alt="鋼線款"
+                loading="lazy"
+                class="h-40 w-full rounded object-cover shadow-sm"
+              />
             </a>
-            <span><a href="https://www.haloepoch.com/collections/%E9%8B%BC%E7%B7%9A%E6%AC%BE" target="_blank" class="underline text-blue-600">鋼線款</a></span>
-        </label>
-        <label class="flex items-center space-x-3">
-            <input type="checkbox" name="styles" value="style1" class="form-checkbox"/>
-            <span><a href="https://www.haloepoch.com/collections/%E5%BD%88%E6%80%A7%E7%B9%A9%E6%AC%BE" target="_blank" class="underline text-blue-600">彈性繩款</a></span>
-        </label>
+          </div>
+          <!-- 彈性繩款（無圖示） -->
+          <div class="space-y-2">
+            <label
+              for="style-elastic"
+              class="flex items-center gap-2 text-sm cursor-pointer"
+            >
+              <input
+                id="style-elastic"
+                type="checkbox"
+                name="styles"
+                value="彈性繩款"
+                class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              彈性繩款
+            </label>
+            <a
+              href="https://www.haloepoch.com/collections/%E5%BD%88%E6%80%A7%E7%B9%A9%E6%AC%BE"
+              target="_blank"
+              class="inline-block text-sm text-blue-600 underline"
+            >
+              前往官網預覽
+            </a>
+          </div>
+        </div>
+      </details>
+
+      <!-- 2. 測驗客製化 -->
+      <fieldset class="space-y-2">
+        <legend class="font-semibold">2. 是否依據測驗來客製化？</legend>
+        <div class="flex flex-wrap items-center gap-4 text-sm">
+          <label class="flex items-center gap-1 cursor-pointer">
+            <input
+              type="radio"
+              name="quiz"
+              value="none"
+              checked
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+            />
+            不需要
+          </label>
+          <label class="flex items-center gap-1 cursor-pointer">
+            <input
+              type="radio"
+              name="quiz"
+              value="life"
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+            />
+            生命靈數
+          </label>
+          <label class="flex items-center gap-1 cursor-pointer">
+            <input
+              type="radio"
+              name="quiz"
+              value="mbti"
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+            />
+            MBTI
+          </label>
+        </div>
+        <p id="lifeDesc" class="hidden text-xs text-blue-600">
+          請先到
+          <a
+            href="https://www.haloepoch.com/pages/life-path-number"
+            target="_blank"
+            class="underline"
+            >生命靈數測驗頁面</a
+          >，完成後截圖給我們。
+        </p>
+        <div id="mbtiInput" class="hidden">
+          <label class="mb-1 block text-sm">請填寫您的 MBTI 類型：</label>
+          <input
+            type="text"
+            name="mbtiType"
+            placeholder="例如 INFP"
+            class="w-full rounded border p-2 text-sm"
+          />
+        </div>
+      </fieldset>
+
+      <!-- 3. 網站範例截圖描述 -->
+      <div>
+        <label class="font-semibold">3. 請在官網搜尋喜歡的樣式並截圖給我們：</label>
+        <p class="text-xs text-gray-500">
+          示例：到我們產品頁挑選後，按截圖／擷圖並上傳給我們。
+        </p>
+        <textarea
+          id="siteScreenshot"
+          name="siteScreenshot"
+          rows="4"
+          class="mt-2 w-full rounded border p-3 text-sm"
+          placeholder="簡單描述截圖內容（選填）…"
+        ></textarea>
       </div>
-    </fieldset>
 
-    <!-- 2. 測驗客製化 -->
-    <fieldset class="space-y-2">
-      <legend class="font-semibold">2. 是否依據測驗來客製化？</legend>
-      <div class="flex items-center space-x-4">
-        <label><input type="radio" name="quiz" value="none" checked/> 不需要</label>
-        <label><input type="radio" name="quiz" value="life"/> 生命靈數</label>
-        <label><input type="radio" name="quiz" value="mbti"/> MBTI</label>
+      <!-- 4. 喜歡元素 -->
+      <fieldset class="space-y-3 text-sm">
+        <legend class="font-semibold">4. 喜歡的元素</legend>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div class="flex flex-col gap-1">
+            <label>4‑1. 喜歡的色系：</label>
+            <input
+              type="text"
+              name="colors"
+              class="w-full rounded border p-3"
+              placeholder="例如：粉色系、透明系…"
+            />
+          </div>
+          <div class="flex flex-col gap-1">
+            <label>4‑2. 喜歡的水晶：</label>
+            <input
+              type="text"
+              name="crystals"
+              class="w-full rounded border p-3"
+              placeholder="例如：紫水晶、海藍寶…"
+            />
+          </div>
+          <div class="flex flex-col gap-1">
+            <label>4‑3. 想要的象徵意義：</label>
+            <input
+              type="text"
+              name="symbolism"
+              class="w-full rounded border p-3"
+              placeholder="例如：平安、招財…"
+            />
+          </div>
+          <div class="flex flex-col gap-1">
+            <label>4‑4. 主石：</label>
+            <select
+              id="mainStone"
+              name="mainStone"
+              class="w-full rounded border p-3"
+            >
+              <option value="none">無</option>
+              <option value="貔貅">貔貅</option>
+              <option value="貓咪">貓咪</option>
+              <option value="兔子">兔子</option>
+              <option value="月光石星環">月光石星環</option>
+            </select>
+          </div>
+          <!-- 子款式動態區 -->
+          <div id="subStone" class="hidden flex flex-col gap-1">
+            <label>4‑4‑1. 具體款式：</label>
+            <select id="subOptions" name="subStone" class="w-full rounded border p-3"></select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 5. 金屬裝飾顏色 -->
+      <div class="space-y-1 text-sm">
+        <label class="font-semibold">5. 飾質選擇：</label>
+        <select name="metalType" class="w-full rounded border p-2">
+          <option value="依照設計即可">依照設計即可</option>
+          <option value="金飾">金飾</option>
+          <option value="銀飾">銀飾</option>
+          <option value="純銀">純銀 (需要加價)</option>
+        </select>
       </div>
-      <!-- 生命靈數說明 -->
-      <p id="lifeDesc" class="hidden text-blue-600">
-        請先到 <a href="https://www.haloepoch.com/pages/life-path-number" target="_blank" class="underline">生命靈數測驗頁面</a>，完成後截圖給我們。
-      </p>
-      <!-- MBTI 填寫 -->
-      <div id="mbtiInput" class="hidden">
-        <label class="block mb-1">請填寫您的 MBTI 類型：</label>
-        <input type="text" name="mbtiType" placeholder="例如 INFP" class="w-full border rounded p-2"/>
-      </div>
-    </fieldset>
 
-    <!-- 3. 網站範例截圖 -->
-    <div>
-      <label class="font-semibold">3. 請在官網搜尋喜歡的樣式並截圖給我們：</label>
-      <p class="text-sm text-gray-500">示例：到我們產品頁挑選後，按截圖/擷圖並上傳給我們。</p>
-    </div>
-
-    <!-- 4. 喜歡元素 -->
-    <fieldset class="space-y-4 text-base">
-      <legend class="font-semibold">4. 喜歡的元素</legend>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="flex flex-col">
-          <label class="mb-1">4-1. 喜歡的色系：</label>
-          <input type="text" name="colors" class="w-full border rounded p-3" placeholder="例如：粉色系、透明系…"/>
-        </div>
-        <div class="flex flex-col">
-          <label class="mb-1">4-2. 喜歡的水晶：</label>
-          <input type="text" name="crystals" class="w-full border rounded p-3" placeholder="例如：紫水晶、海藍寶…"/>
-        </div>
-        <div class="flex flex-col">
-          <label class="mb-1">4-3. 想要的象徵意義：</label>
-          <input type="text" name="symbolism" class="w-full border rounded p-3" placeholder="例如：平安、招財…"/>
-        </div>
-        <div class="flex flex-col">
-          <label class="mb-1">4-4. 主石：</label>
-          <select id="mainStone" name="mainStone" class="w-full border rounded p-3">
-            <option value="none">無</option>
-            <option value="pi-xiu">貔貅</option>
-            <option value="cat">貓咪</option>
-            <option value="rabbit">兔子</option>
-            <option value="moon-ring">月光石星環</option>
-          </select>
-        </div>
-        <div id="subStone" class="hidden flex flex-col">
-          <label class="mb-1">4-4-1. 具體款式：</label>
-          <select id="subOptions" name="subStone" class="w-full border rounded p-3"></select>
-        </div>
-      </div>
-    </fieldset>
-
-    <!-- 5. 金屬裝飾的顏色 -->
-    <div>
-      <label class="font-semibold">5. 飾質選擇：</label>
-      <select name="metalType" class="w-full border rounded p-2">
-        <option value="gold">依照設計</option>
-        <option value="gold">金飾</option>
-        <option value="silver">銀飾</option>
-        <option value="gold">純銀 (需要加價)</option>
-      </select>
-    </div>
-
-    <!-- 6. 結尾扣（可複選） -->
-    <fieldset class="space-y-2">
+      <!-- 6. 結尾扣 -->
+      <fieldset class="space-y-2 text-sm">
         <legend class="font-semibold">6. 請選擇結尾扣（可複選）</legend>
-        <p class="text-sm text-gray-500">結尾扣介紹請見 <a href="https://www.haloepoch.com/pages/bracelet-buckle-guide" target="_blank" class="underline text-blue-600">官方介紹</a></p>
-        <div class="grid grid-cols-2 gap-4">
-          <label><input type="checkbox" name="clasp" value="type1"/> 龍蝦扣 </label>
-          <label><input type="checkbox" name="clasp" value="type2"/> OT 扣 </label>
-          <label><input type="checkbox" name="clasp" value="type3"/> 磁吸扣 </label>
-          <label><input type="checkbox" name="clasp" value="type4"/> 磁吸龍蝦扣 </label>
-          <label><input type="checkbox" name="clasp" value="type5"/> 編織結尾 </label>
+        <p class="text-xs text-gray-500">
+          結尾扣介紹請見
+          <a
+            href="https://www.haloepoch.com/pages/bracelet-buckle-guide"
+            target="_blank"
+            class="text-blue-600 underline"
+            >官方介紹</a>
+        </p>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="clasp"
+              value="龍蝦扣"
+              class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            龍蝦扣
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="clasp"
+              value="OT 扣"
+              class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            OT 扣
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="clasp"
+              value="磁吸扣"
+              class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            磁吸扣
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="clasp"
+              value="磁吸龍蝦扣"
+              class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            磁吸龍蝦扣
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="clasp"
+              value="編織結尾"
+              class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            編織結尾
+          </label>
         </div>
-    </fieldset>
+      </fieldset>
 
-    <!-- 7. 預算 -->
-    <div>
-      <label class="font-semibold">7. 預算區間 </label>
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <label class="font-semibold"> 預算下限 (NT$)：</label>
-          <input type="number" name="budgetMin" class="w-full border rounded p-2" placeholder="最少 1000" min=1000/>
-        </div>
-        <div>
-          <label class="font-semibold"> 預算上限 (NT$)：</label>
-          <input type="number" name="budgetMax" class="w-full border rounded p-2" placeholder="0" min=0/>
+      <!-- 7. 預算區間 -->
+      <div class="space-y-3 text-sm">
+        <label class="font-semibold">7. 預算區間</label>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div class="flex flex-col gap-1">
+            <label>預算下限 (NT$)：</label>
+            <input
+              type="number"
+              name="budgetMin"
+              min="1000"
+              class="w-full rounded border p-2"
+              placeholder="最少 1000"
+            />
+          </div>
+          <div class="flex flex-col gap-1">
+            <label>預算上限 (NT$)：</label>
+            <input
+              type="number"
+              name="budgetMax"
+              min="0"
+              class="w-full rounded border p-2"
+              placeholder="0"
+            />
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 8. 送禮 -->
-    <div>
-      <label class="font-semibold">6. 是否為送禮？</label>
-      <select name="isGift" class="w-full border rounded p-2">
-        <option value="no">否</option>
-        <option value="yes">是</option>
-      </select>
-    </div>
+      <!-- 8. 送禮 -->
+      <div class="space-y-1 text-sm">
+        <label class="font-semibold">8. 是否為送禮？</label>
+        <select name="isGift" class="w-full rounded border p-2">
+          <option value="no">否</option>
+          <option value="yes">是</option>
+        </select>
+      </div>
 
-    <!-- 9. 緊迫時間 -->
-    <div>
-      <label class="font-semibold">7. 有沒有急迫的時間需求？</label>
-      <input type="text" name="deadline" class="w-full border rounded p-2" placeholder="例如：7/15 前…"/>
-    </div>
+      <!-- 9. 緊迫時間 -->
+      <div class="space-y-1 text-sm">
+        <label class="font-semibold">9. 有沒有急迫的時間需求？</label>
+        <input
+          type="text"
+          name="deadline"
+          class="w-full rounded border p-2"
+          placeholder="例如：7/15 前…"
+        />
+      </div>
 
-    <!-- 10. 其他備註 -->
-    <div>
-      <label class="font-semibold">8. 其他備註：</label>
-      <textarea name="notes" rows="4" class="w-full border rounded p-2" placeholder="其他想告訴我們的…"></textarea>
-    </div>
+      <!-- 10. 其他備註 -->
+      <div class="space-y-1 text-sm">
+        <label class="font-semibold">10. 其他備註：</label>
+        <textarea
+          name="notes"
+          rows="4"
+          class="w-full rounded border p-2"
+          placeholder="其他想告訴我們的…"
+        ></textarea>
+      </div>
 
-    <!-- 11. 客製化注意事項 -->
-    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 space-y-2">
-        <p class="font-semibold text-lg">客製化注意事項</p>
-        <ul class="list-disc list-inside text-md space-y-1">
-          <li>所有設計均屬專屬於本工作室，未經許可請勿重製或二次創作。</li>
-          <li>細節確認後即進行手工製作，製作完成後恕不接受大幅度修改。</li>
-          <li>天然水晶會有色澤與紋路差異，屬正常現象無法指定完全相同。</li>
-          <li>隔珠與結尾調整用部件除非特別指定不然會依照設計習慣製作。</li>
+      <!-- 11. 注意事項 -->
+      <section class="rounded-lg border-l-4 border-yellow-400 bg-yellow-50 p-4 text-sm space-y-1">
+        <p class="font-semibold text-base">客製化注意事項</p>
+        <ul class="list-inside list-disc space-y-1">
+          <li>所有設計均屬於本工作室，未經許可請勿重製或二次創作。</li>
+          <li>細節確認後即進行手工製作，恕不接受大幅度修改。</li>
+          <li>天然水晶色澤與紋路差異屬正常，無法指定完全相同。</li>
+          <li>隔珠與結尾部件除非特別指定，將依照設計習慣製作。</li>
           <li>客製化通常於下單後 10 個工作天左右寄出。</li>
           <li>如有特殊需求請務必在下單前備註說明，否則視同同意上述條款。</li>
         </ul>
-    </div>
+      </section>
 
-    <!-- 生成按鈕 -->
-    <div class="text-center space-y-2">
-      <button id="generateTextBtn"
-              class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-        生成分享文字
-      </button>
-      <textarea name="siteScreenshot" id="shareText"
-                class="w-full border rounded p-3 text-base"
-                rows="8" readonly
-                placeholder="按上面按鈕生成文字，然後長按複製到 IG DM…"></textarea>
-    </div>
-    <div class="text-center">
-      <button id="generateBtn" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-        生成並下載摘要圖
-      </button>
-    </div>
-  </div>
+      <!-- 生成文字 / 圖片 -->
+      <div class="space-y-3">
+        <button
+          id="generateTextBtn"
+          class="w-full rounded-lg bg-green-600 py-3 text-white hover:bg-green-700 sm:w-auto sm:px-6"
+        >
+          生成分享文字
+        </button>
+        <textarea
+          id="shareText"
+          readonly
+          class="min-h-[150px] max-h-[300px] w-full overflow-y-auto rounded border p-3 text-sm"
+          placeholder="按上面按鈕生成文字，然後長按複製到 IG DM…"
+        ></textarea>
+      </div>
 
-  <script>
-    // 測驗選擇顯示邏輯
-    document.querySelectorAll('input[name="quiz"]').forEach(radio => {
-      radio.addEventListener('change', e => {
-        document.getElementById('lifeDesc').classList.toggle('hidden', e.target.value !== 'life');
-        document.getElementById('mbtiInput').classList.toggle('hidden', e.target.value !== 'mbti');
-      });
-    });
+      <!-- Toast：複製成功提示 -->
+      <div id="toast"
+          class="fixed bottom-4 left-1/2 -translate-x-1/2 rounded bg-black bg-opacity-80
+                  px-4 py-2 text-white text-xs opacity-0
+                  transition-opacity duration-300 pointer-events-none">
+        已複製到剪貼簿
+      </div>
+    </main>
 
-    // 主石子選單邏輯
-    const subMap = {
-      'pi-xiu': ['月光石貔貅','拉長石貔貅','紫牙烏貔貅','黑金骨幹貔貅'],
-      'cat': ['白色貓咪','黑色貓咪'],
-      'rabbit': ['月光石兔子','橙月光兔子']
-    };
-    document.getElementById('mainStone').addEventListener('change', e => {
-      const key = e.target.value;
-      const subDiv = document.getElementById('subStone');
-      const subSelect = document.getElementById('subOptions');
-      subSelect.innerHTML = '';
-      if (subMap[key]) {
-        subDiv.classList.remove('hidden');
-        subMap[key].forEach(opt => {
-          const o = document.createElement('option');
-          o.value = opt; o.textContent = opt;
-          subSelect.appendChild(o);
-        });
-      } else {
-        subDiv.classList.add('hidden');
-      }
-    });
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 rounded bg-black bg-opacity-80 px-4 py-2 text-white text-xs opacity-0 transition-opacity duration-300 pointer-events-none">已複製到剪貼簿</div>
 
-    // 生成 + 手機兼容下載
-    document.getElementById('generateBtn').addEventListener('click', () => {
-      const container = document.getElementById('formContainer');
-      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      const scale = isMobile ? 1 : 2;
-
-      // 顯示等待提示
-      const btn = document.getElementById('generateBtn');
-      btn.disabled = true;
-      btn.textContent = isMobile ? '生成中，請稍後…' : '生成並下載…';
-
-      html2canvas(container, { scale }).then(canvas => {
-        const dataURL = canvas.toDataURL('image/png');
-        if (isMobile) {
-          window.open('').document.write(`
-            <p style="font-family:sans-serif;text-align:center;">
-              長按下方圖片並選擇「儲存圖片」<br/><br/>
-              <img src="${dataURL}" style="max-width:100%;height:auto;border:1px solid #ccc;"/>
-            </p>
-          `);
-        } else {
-          const link = document.createElement('a');
-          link.download = 'bracelet_request.png';
-          link.href = dataURL;
-          link.click();
-        }
-      }).finally(() => {
-        // 恢復按鈕狀態
-        btn.disabled = false;
-        btn.textContent = '生成並下載摘要圖';
-      });
-    });
-    document.getElementById('generateTextBtn').addEventListener('click', () => {
-      const getVals = (selector) =>
-        [...document.querySelectorAll(selector)]
-          .filter(el => el.checked || el.tagName==='SELECT' || el.value)
-          .map(el => {
-            if (el.type==='checkbox'||el.type==='radio') return el.nextElementSibling?.textContent.trim();
-            return el.value;
-          })
-          .filter(Boolean);
-      
-      const summary = [
-        `【款式】 ${getVals('input[name="styles"]:checked').join(', ')}`,
-        `【測驗】 ${document.querySelector('input[name="quiz"]:checked').value}`,
-        document.querySelector('input[name="quiz"]:checked').value==='mbti'
-          ? `【MBTI】: ${document.querySelector('input[name="mbtiType"]').value}` : null,
-        `【網站範例截圖描述】 ${document.querySelector('textarea[name="siteScreenshot"]').value}`,
-        `【喜歡色系】 ${document.querySelector('input[name="colors"]').value}`,
-        `【喜歡水晶】 ${document.querySelector('input[name="crystals"]').value}`,
-        `【象徵意義】 ${document.querySelector('input[name="symbolism"]').value}`,
-        `【主石】 ${document.querySelector('select[name="mainStone"]').value}`,
-        `【子款式】 ${document.getElementById('subOptions')?.value||''}`,
-        `【飾質】 ${document.querySelector('select[name="metalType"]').value}`,
-        `【結尾扣】 ${getVals('input[name="clasp"]:checked').join(', ')}`,
-        `【預算】 ${document.querySelector('input[name="budgetMin"]').value} – ${document.querySelector('input[name="budgetMax"]').value}`,
-        `【送禮】 ${document.querySelector('select[name="isGift"]').value}`,
-        `【時間需求】 ${document.querySelector('input[name="deadline"]').value}`,
-        `【其他備註】 ${document.querySelector('textarea[name="notes"]').value}`,
-      ].filter(Boolean).join('\n');
-
-      const ta = document.getElementById('shareText');
-      ta.value = summary;
-      ta.select();
-      document.execCommand('copy');
-      alert('文字已複製，請貼到 IG DM！');
-    });
-  </script>
-</body>
+    <!-- 外部腳本 -->
+    <script src="scripts.js" defer></script>
+  </body>
 </html>
