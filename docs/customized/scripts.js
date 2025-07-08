@@ -1,3 +1,11 @@
+/* 持續監聽，忽略跳轉強制開啟分頁 */
+document.querySelectorAll('a.external-link').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();                     // 阻止原本行為
+      window.open(a.href, '_blank', 'noopener');
+    });
+});
+
 /* Toast */
 const showToast = () => {
     const t = document.getElementById('toast');
@@ -71,7 +79,7 @@ generateBtn?.addEventListener('click', () => {
       `【款式】 ${getCheckedValues('input[name="styles"]:checked').join(', ')}`,
       `【測驗】 ${document.querySelector('input[name="quiz"]:checked').value}`,
       document.querySelector('input[name="quiz"]:checked').value === 'mbti' ? `【MBTI】 ${document.querySelector('input[name="mbtiType"]').value}` : null,
-      `【網站範例截圖描述】 ${document.getElementById('siteScreenshot').value}`,
+    //   `【網站範例截圖描述】 ${document.getElementById('siteScreenshot').value}`,
       `【喜歡色系】 ${document.querySelector('input[name="colors"]').value}`,
       `【喜歡水晶】 ${document.querySelector('input[name="crystals"]').value}`,
       `【象徵意義】 ${document.querySelector('input[name="symbolism"]').value}`,
@@ -81,7 +89,7 @@ generateBtn?.addEventListener('click', () => {
       `【結尾扣】 ${getCheckedValues('input[name="clasp"]:checked').join(', ')}`,
       `【預算】 ${document.querySelector('input[name="budgetMin"]').value} – ${document.querySelector('input[name="budgetMax"]').value}`,
       `【送禮】 ${document.querySelector('select[name="isGift"]').value}`,
-      `【時間需求】 ${document.querySelector('input[name="deadline"]').value}`,
+    //   `【時間需求】 ${document.querySelector('input[name="deadline"]').value}`,
       `【其他備註】 ${document.querySelector('textarea[name="notes"]').value}`,
     ].filter(Boolean).join('\n');
   

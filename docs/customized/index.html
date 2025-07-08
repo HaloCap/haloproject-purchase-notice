@@ -26,6 +26,21 @@
         </p>
       </header>
 
+      <!-- 0. 網站範例截圖描述 -->
+      <div>
+        <label class="font-semibold">0. 請在官網搜尋喜歡的樣式並截圖保存</label>
+        <p id="likeStyle" class="text-xs text-blue-600">
+          示例：到我們
+          <a
+            href="https://www.haloepoch.com"
+            target="_blank"
+            class="underline external-link"
+            rel="noopener noreferrer"
+            >官網產品頁</a
+          >挑選後，截圖並在 IG 或是 LINE 給我們
+        </p>
+      </div>
+
       <!-- 1. 款式選擇 Accordion -->
       <details class="rounded-lg border group" open>
         <summary
@@ -45,6 +60,7 @@
             />
           </svg>
         </summary>
+        <p class="px-4 pl-6 pt-3 text-xs text-gray-500">點選圖片即可導到官網看看款式～</p>
         <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3">
           <!-- 半半設計款 -->
           <div class="space-y-2">
@@ -64,7 +80,8 @@
             <a
               href="https://www.haloepoch.com/collections/%E5%8D%8A%E5%8D%8A%E8%A8%AD%E8%A8%88%E6%AC%BE"
               target="_blank"
-              class="block"
+              class="block external-link"
+              rel="noopener noreferrer"
             >
               <img
                 src="../assets/half.png"
@@ -92,7 +109,8 @@
             <a
               href="https://www.haloepoch.com/collections/wire"
               target="_blank"
-              class="block"
+              class="block external-link"
+              rel="noopener noreferrer"
             >
               <img
                 src="../assets/wire.png"
@@ -120,7 +138,8 @@
             <a
               href="https://www.haloepoch.com/collections/%E7%B7%A8%E7%B9%94%E6%AC%BE"
               target="_blank"
-              class="block"
+              class="block external-link"
+              rel="noopener noreferrer"
             >
               <img
                 src="../assets/braid.png"
@@ -148,7 +167,8 @@
             <a
               href="https://www.haloepoch.com/collections/%E9%8B%BC%E7%B7%9A%E6%AC%BE"
               target="_blank"
-              class="block"
+              class="block external-link"
+              rel="noopener noreferrer"
             >
               <img
                 src="../assets/steel.png"
@@ -173,13 +193,6 @@
               />
               彈性繩款
             </label>
-            <a
-              href="https://www.haloepoch.com/collections/%E5%BD%88%E6%80%A7%E7%B9%A9%E6%AC%BE"
-              target="_blank"
-              class="inline-block text-sm text-blue-600 underline"
-            >
-              前往官網預覽
-            </a>
           </div>
         </div>
       </details>
@@ -222,7 +235,8 @@
           <a
             href="https://www.haloepoch.com/pages/life-path-number"
             target="_blank"
-            class="underline"
+            class="underline external-link"
+            rel="noopener noreferrer"
             >生命靈數測驗頁面</a
           >，完成後截圖給我們。
         </p>
@@ -237,27 +251,12 @@
         </div>
       </fieldset>
 
-      <!-- 3. 網站範例截圖描述 -->
-      <div>
-        <label class="font-semibold">3. 請在官網搜尋喜歡的樣式並截圖給我們：</label>
-        <p class="text-xs text-gray-500">
-          示例：到我們產品頁挑選後，按截圖／擷圖並上傳給我們。
-        </p>
-        <textarea
-          id="siteScreenshot"
-          name="siteScreenshot"
-          rows="4"
-          class="mt-2 w-full rounded border p-3 text-sm"
-          placeholder="簡單描述截圖內容（選填）…"
-        ></textarea>
-      </div>
-
-      <!-- 4. 喜歡元素 -->
+      <!-- 3. 喜歡元素 -->
       <fieldset class="space-y-3 text-sm">
-        <legend class="font-semibold">4. 喜歡的元素</legend>
+        <legend class="font-semibold">3. 喜歡的元素</legend>
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div class="flex flex-col gap-1">
-            <label>4‑1. 喜歡的色系：</label>
+            <label>3‑1. 喜歡的色系：</label>
             <input
               type="text"
               name="colors"
@@ -266,7 +265,7 @@
             />
           </div>
           <div class="flex flex-col gap-1">
-            <label>4‑2. 喜歡的水晶：</label>
+            <label>3‑2. 喜歡的水晶：</label>
             <input
               type="text"
               name="crystals"
@@ -275,7 +274,7 @@
             />
           </div>
           <div class="flex flex-col gap-1">
-            <label>4‑3. 想要的象徵意義：</label>
+            <label>3‑3. 想要的象徵意義：</label>
             <input
               type="text"
               name="symbolism"
@@ -284,7 +283,7 @@
             />
           </div>
           <div class="flex flex-col gap-1">
-            <label>4‑4. 主石：</label>
+            <label>3‑4. 主石：</label>
             <select
               id="mainStone"
               name="mainStone"
@@ -296,35 +295,38 @@
               <option value="兔子">兔子</option>
               <option value="月光石星環">月光石星環</option>
             </select>
+            <!-- 🔔 新增提醒文字 -->
+            <p class="mt-1 text-xs text-gray-500">* 主石材料數量可能不穩定，最終將依實際庫存與討論結果為主</p>
           </div>
           <!-- 子款式動態區 -->
           <div id="subStone" class="hidden flex flex-col gap-1">
-            <label>4‑4‑1. 具體款式：</label>
+            <label>3‑4‑1. 具體款式：</label>
             <select id="subOptions" name="subStone" class="w-full rounded border p-3"></select>
           </div>
         </div>
       </fieldset>
 
-      <!-- 5. 金屬裝飾顏色 -->
+      <!-- 4. 金屬裝飾顏色 -->
       <div class="space-y-1 text-sm">
-        <label class="font-semibold">5. 飾質選擇：</label>
+        <label class="font-semibold">4. 飾質選擇：</label>
         <select name="metalType" class="w-full rounded border p-2">
-          <option value="依照設計即可">依照設計即可</option>
+          <option value="依照設計討論">依照設計討論</option>
           <option value="金飾">金飾</option>
           <option value="銀飾">銀飾</option>
           <option value="純銀">純銀 (需要加價)</option>
         </select>
       </div>
 
-      <!-- 6. 結尾扣 -->
+      <!-- 5. 結尾扣 -->
       <fieldset class="space-y-2 text-sm">
-        <legend class="font-semibold">6. 請選擇結尾扣（可複選）</legend>
+        <legend class="font-semibold">5. 請選擇喜歡的結尾扣（可複選）</legend>
         <p class="text-xs text-gray-500">
           結尾扣介紹請見
           <a
             href="https://www.haloepoch.com/pages/bracelet-buckle-guide"
             target="_blank"
-            class="text-blue-600 underline"
+            class="text-blue-600 underline external-link"
+            rel="noopener noreferrer"
             >官方介紹</a>
         </p>
         <div class="grid grid-cols-2 gap-3">
@@ -376,9 +378,9 @@
         </div>
       </fieldset>
 
-      <!-- 7. 預算區間 -->
+      <!-- 6. 預算區間 -->
       <div class="space-y-3 text-sm">
-        <label class="font-semibold">7. 預算區間</label>
+        <label class="font-semibold">6. 預算區間</label>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div class="flex flex-col gap-1">
             <label>預算下限 (NT$)：</label>
@@ -403,9 +405,9 @@
         </div>
       </div>
 
-      <!-- 8. 送禮 -->
+      <!-- 7. 送禮 -->
       <div class="space-y-1 text-sm">
-        <label class="font-semibold">8. 是否為送禮？</label>
+        <label class="font-semibold">7. 是否為送禮？</label>
         <select name="isGift" class="w-full rounded border p-2">
           <option value="no">否</option>
           <option value="yes">是</option>
@@ -413,7 +415,7 @@
       </div>
 
       <!-- 9. 緊迫時間 -->
-      <div class="space-y-1 text-sm">
+      <!-- <div class="space-y-1 text-sm">
         <label class="font-semibold">9. 有沒有急迫的時間需求？</label>
         <input
           type="text"
@@ -421,11 +423,11 @@
           class="w-full rounded border p-2"
           placeholder="例如：7/15 前…"
         />
-      </div>
+      </div> -->
 
-      <!-- 10. 其他備註 -->
+      <!-- 8. 其他備註 -->
       <div class="space-y-1 text-sm">
-        <label class="font-semibold">10. 其他備註：</label>
+        <label class="font-semibold">8. 其他備註：</label>
         <textarea
           name="notes"
           rows="4"
@@ -434,20 +436,21 @@
         ></textarea>
       </div>
 
-      <!-- 11. 注意事項 -->
+      <!-- 9. 注意事項 -->
       <section class="rounded-lg border-l-4 border-yellow-400 bg-yellow-50 p-4 text-sm space-y-1">
         <p class="font-semibold text-base">客製化注意事項</p>
         <ul class="list-inside list-disc space-y-1">
           <li>所有設計均屬於本工作室，未經許可請勿重製或二次創作。</li>
           <li>細節確認後即進行手工製作，恕不接受大幅度修改。</li>
           <li>天然水晶色澤與紋路差異屬正常，無法指定完全相同。</li>
-          <li>隔珠與結尾部件除非特別指定，將依照設計習慣製作。</li>
-          <li>客製化通常於下單後 10 個工作天左右寄出。</li>
+          <li>隔珠與結尾延長部分，請相信我們的專業，依照設計習慣製作。</li>
+          <li>確保雙方權益，下單後才會排單排版，我們會盡早溝通設計！</li>
+          <li>請原諒我們客製單爆炸，客製化通常於下單後 10 個工作天左右寄出。</li>
           <li>如有特殊需求請務必在下單前備註說明，否則視同同意上述條款。</li>
         </ul>
       </section>
 
-      <!-- 生成文字 / 圖片 -->
+      <!-- 生成文字 -->
       <div class="space-y-3">
         <button
           id="generateTextBtn"
@@ -459,7 +462,7 @@
           id="shareText"
           readonly
           class="min-h-[150px] max-h-[300px] w-full overflow-y-auto rounded border p-3 text-sm"
-          placeholder="按上面按鈕生成文字，然後長按複製到 IG DM…"
+          placeholder="按上面按鈕生成文字，即可複製到剪貼簿，到 IG 或是 LINE 對話貼上即可！"
         ></textarea>
       </div>
 
@@ -471,9 +474,6 @@
         已複製到剪貼簿
       </div>
     </main>
-
-    <!-- Toast -->
-    <div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 rounded bg-black bg-opacity-80 px-4 py-2 text-white text-xs opacity-0 transition-opacity duration-300 pointer-events-none">已複製到剪貼簿</div>
 
     <!-- 外部腳本 -->
     <script src="scripts.js" defer></script>
