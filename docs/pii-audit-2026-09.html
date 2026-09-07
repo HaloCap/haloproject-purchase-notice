@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>個資與暴露面查核 · haloproject-purchase-notice · 2026-09</title>
+<style>
+  :root{
+    --bg:#faf9f7; --panel:#ffffff; --ink:#1c1b19; --ink-soft:#5b5852;
+    --line:#e4e0d9; --line-soft:#efece6;
+    --ok:#1f7a4d; --ok-bg:#eaf6ef;
+    --warn:#8a5a00; --warn-bg:#fdf3e0;
+    --bad:#a32b2b; --bad-bg:#fbeceb;
+    --info:#2a5c8a; --info-bg:#eaf2f9;
+    --code-bg:#f3f1ec;
+    --accent:#8a6d3b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#15161a; --panel:#1c1e23; --ink:#e8e6e1; --ink-soft:#a3a09a;
+      --line:#31343b; --line-soft:#26292f;
+      --ok:#6cc696; --ok-bg:#16281f;
+      --warn:#e0b25e; --warn-bg:#2b2416;
+      --bad:#e88a86; --bad-bg:#2e1b1b;
+      --info:#84b4e0; --info-bg:#16222e;
+      --code-bg:#24272d;
+      --accent:#cbab6f;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:0 1.1rem 5rem;
+    background:var(--bg); color:var(--ink);
+    font:16px/1.75 -apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px;margin:0 auto}
+  header{padding:3rem 0 1.5rem;border-bottom:2px solid var(--line)}
+  .eyebrow{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 .6rem}
+  h1{font-size:1.85rem;line-height:1.3;margin:0 0 .7rem;letter-spacing:-.01em}
+  .sub{color:var(--ink-soft);font-size:.95rem;margin:0}
+  .sub code{font-size:.88em}
+  h2{
+    font-size:1.22rem;margin:3.2rem 0 .9rem;padding-top:1.4rem;
+    border-top:1px solid var(--line);letter-spacing:-.005em;
+  }
+  h2:first-of-type{border-top:0}
+  h3{font-size:1rem;margin:2rem 0 .6rem;color:var(--ink)}
+  h4{font-size:.92rem;margin:1.4rem 0 .4rem;color:var(--ink-soft);font-weight:700}
+  p{margin:.7rem 0}
+  ul,ol{margin:.7rem 0;padding-left:1.35rem}
+  li{margin:.35rem 0}
+  code{background:var(--code-bg);padding:.12em .38em;border-radius:4px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.87em;word-break:break-word}
+  pre{background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;overflow-x:auto;font-size:.82rem;line-height:1.6}
+  pre code{background:none;padding:0;font-size:1em}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.15rem 1.3rem;margin:1.1rem 0}
+  .callout{border-left:4px solid;border-radius:6px;padding:.95rem 1.15rem;margin:1.1rem 0}
+  .callout p:first-child{margin-top:0}
+  .callout p:last-child{margin-bottom:0}
+  .c-ok{border-color:var(--ok);background:var(--ok-bg)}
+  .c-warn{border-color:var(--warn);background:var(--warn-bg)}
+  .c-bad{border-color:var(--bad);background:var(--bad-bg)}
+  .c-info{border-color:var(--info);background:var(--info-bg)}
+  .lead{font-size:1.06rem;line-height:1.7}
+  .verdict{font-size:1.1rem;font-weight:700;margin:0 0 .5rem}
+  table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem;display:block;overflow-x:auto}
+  th,td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  th{font-weight:700;color:var(--ink-soft);font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody tr:last-child td{border-bottom:0}
+  .tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.05em;padding:.16em .55em;border-radius:4px;white-space:nowrap}
+  .t-ok{background:var(--ok-bg);color:var(--ok)}
+  .t-warn{background:var(--warn-bg);color:var(--warn)}
+  .t-bad{background:var(--bad-bg);color:var(--bad)}
+  .t-info{background:var(--info-bg);color:var(--info)}
+  details{border:1px solid var(--line);border-radius:8px;padding:.75rem 1rem;margin:.8rem 0;background:var(--panel)}
+  details[open]{padding-bottom:1rem}
+  summary{cursor:pointer;font-weight:700;font-size:.93rem;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"▸ ";color:var(--accent);font-weight:400}
+  details[open] summary::before{content:"▾ "}
+  .muted{color:var(--ink-soft);font-size:.88rem}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:.3rem 1.1rem;font-size:.9rem;margin:.8rem 0}
+  .kv dt{color:var(--ink-soft);white-space:nowrap}
+  .kv dd{margin:0;word-break:break-word}
+  .decision{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;background:var(--panel);padding:1.1rem 1.3rem;margin:1.2rem 0}
+  .decision h3{margin-top:0}
+  footer{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line);color:var(--ink-soft);font-size:.85rem}
+  hr{border:0;border-top:1px solid var(--line-soft);margin:2rem 0}
+  .num{font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">內部稽核 · 不對外發佈</p>
+  <h1>個資與暴露面查核<br>haloproject-purchase-notice</h1>
+  <p class="sub">
+    2026-09-06 · 分支 <code>audit/pii</code> · 唯讀稽核，未改動 <code>main</code> / <code>develop</code>，
+    未重寫歷史、未刪檔、未變更 repo 可見性
+  </p>
+</header>
+
+<div class="callout c-warn" style="margin-top:1.6rem">
+  <p><strong>這份報告本身的處置</strong>：它放在 <code>docs/</code> 底下，而這個 repo 的
+  GitHub Pages 來源正是 <code>develop</code> 分支的 <code>/docs</code>。也就是說，
+  只要這個分支被併回 <code>develop</code>，這份稽核報告就會變成一個公開網址。</p>
+  <p>已經先在 <code>docs/_config.yml</code> 加上 <code>exclude</code> 把它擋在 Jekyll 建置之外。
+  但那是一道**設定**，不是一道牆——如果之後有人改了 <code>_config.yml</code>，它就會上線。
+  最穩的做法是這份報告看完就從 <code>develop</code> 拿掉，只留在稽核分支裡。</p>
+</div>
+
+<div class="callout c-info">
+  <p><strong>遮蔽原則</strong>：報告內所有可識別資訊一律遮蔽（<code>a***@gmail.com</code>、
+  <code>09xx-xxx-123</code> 這種形式）。一份談外洩的報告如果自己照抄個資，它就是第二次外洩。
+  底下每一則發現都可以用文中附的指令自行復現，不需要我把原文貼出來。</p>
+</div>
+
+
+<h2>一、頭條：那份 9.5&nbsp;MB 名單到底在哪</h2>
+
+<div class="callout c-ok">
+  <p class="verdict">結論：不在這個 repo，而且從來沒有在過。</p>
+  <p>名單本身<strong>真的存在</strong>，但它換了名字、換了 repo、也換了客戶——
+  而且它<strong>沒有外洩</strong>。它躺在一個 <strong>PRIVATE</strong> repo 的工作目錄裡，
+  未被 git 追蹤，且被該 repo 的 <code>.gitignore</code> 明確擋掉，全歷史查無任何一次提交。</p>
+</div>
+
+<h3>1.1 先講最乾淨的一刀：那個檔名是文件自己生出來的</h3>
+
+<p>工作區根目錄的 <code>CLAUDE.md</code> 寫的是
+<code>facebook_leads_full_20260131.csv（9.5MB 完整名單）</code>。
+用 Spotlight 對整台機器搜 <code>20260131</code> 這個字串，命中<strong>只有一個檔案</strong>：</p>
+
+<pre><code>$ mdfind '20260131'
+/Users/elian/git_repo/halo/CLAUDE.md</code></pre>
+
+<p class="muted">也就是說，那個檔名唯一存在的地方，就是宣稱它存在的那份文件。
+日期（0131）、副檔名（.csv）、大小（9.5MB）——三個屬性沒有一個對得上真實檔案。</p>
+
+<h3>1.2 真正的名單在哪</h3>
+
+<div class="panel">
+  <dl class="kv">
+    <dt>路徑</dt><dd><code>/Users/elian/git_repo/lixin/lixin-mail-system-frontend/facebook_leads_full_20260423</code></dd>
+    <dt>大小</dt><dd class="num">14,683,918 bytes（14.0 MiB）——不是 9.5 MB</dd>
+    <dt>副檔名</dt><dd><strong>沒有</strong>。<code>file</code> 判定為 <code>CSV text</code></dd>
+    <dt>時間</dt><dd>2026-04-23 16:29——不是 01-31</dd>
+    <dt>git 追蹤</dt><dd><span class="tag t-ok">未追蹤</span> <code>git ls-files --error-unmatch</code> 回報 <em>did not match any file(s) known to git</em></dd>
+    <dt>忽略規則</dt><dd><code>.gitignore:57: facebook_leads_full_*</code> ← 已被明確擋掉</dd>
+    <dt>所在 repo</dt><dd><code>HaloEpoch/lixin-mail-system-frontend</code> · <span class="tag t-ok">PRIVATE</span></dd>
+    <dt>歷史</dt><dd><code>git log --all -- '*facebook_leads*'</code> → 空。<strong>從來沒被 commit 過。</strong></dd>
+  </dl>
+</div>
+
+<div class="callout c-warn">
+  <p><strong>沒有外洩，但它是靠一行 <code>.gitignore</code> 撐著的。</strong>
+  這個檔案有兩個特徵讓它比一般資料檔更危險：</p>
+  <ul style="margin-bottom:0">
+    <li><strong>沒有副檔名。</strong>任何「只擋 <code>*.csv</code>」的規則都會放它過。
+      廣告後台下載下來的匯出檔常常長這樣。</li>
+    <li><strong>它躺在 repo 的工作目錄正中央</strong>，不在 <code>data/</code> 或 <code>tmp/</code> 這種
+      一看就知道要忽略的地方。一次 <code>git add -A</code> 加上一次 <code>.gitignore</code> 被改壞，
+      就結束了。</li>
+  </ul>
+</div>
+
+<h3>1.3 CLAUDE.md 那段描述的其餘部分，一樣是錯的</h3>
+
+<table>
+  <thead><tr><th>文件宣稱</th><th>實際情況</th></tr></thead>
+  <tbody>
+    <tr><td><code>leads_webhook/</code>（FB Leads webhook）</td>
+        <td><span class="tag t-bad">不存在</span> 全機器搜尋無此目錄。最接近的是 lixin 那邊的 <code>docs/meta_leads_webhook_guide.md</code></td></tr>
+    <tr><td><code>projects/</code>（Firestore／廣告 API Notebook）</td>
+        <td><span class="tag t-bad">不存在</span> 整台機器（排除 node_modules）找不到<strong>任何一個</strong> <code>.ipynb</code></td></tr>
+    <tr><td>Python / Flask 3.0 / Jupyter</td>
+        <td><span class="tag t-bad">不存在</span> 這個 repo 沒有半行 Python。它是純靜態 HTML/CSS/JS</td></tr>
+    <tr><td>epic / tasks / user_story CSV</td>
+        <td><span class="tag t-bad">不存在</span> Spotlight 查無</td></tr>
+    <tr><td><code>docs/</code>（GitHub Pages 產品展示）</td>
+        <td><span class="tag t-ok">正確</span> 這是唯一寫對的一項</td></tr>
+  </tbody>
+</table>
+
+<div class="callout c-bad">
+  <p><strong>這比「文件過期」嚴重一級：它是跨客戶的張冠李戴。</strong></p>
+  <p>被描述的那些東西（FB Leads webhook、廣告 API、ETL、完整名單）真的存在，
+  但它們屬於 <code>lixin</code> ——<strong>另一個客戶</strong>的專案。這段描述把那個客戶的
+  資產結構寫進了 Halo 自家 repo 的說明裡。</p>
+  <p>今天已經查證根 <code>CLAUDE.md</code> 描述了 3 個磁碟上不存在的 repo、漏掉 11 個存在的。
+  這一則的性質不同：前者是「盤點漏了」，這一則是「把 A 客戶的東西記到 B 客戶名下」。
+  在有多個客戶專案同機開發的情況下，這種漂移會直接誤導接手的人去錯的地方找資料——
+  或者更糟，去對的地方找到資料，然後放進錯的 repo。</p>
+</div>
+
+<details>
+  <summary>復現指令（全部唯讀）</summary>
+<pre><code># 檔名是不是文件自己生的
+mdfind '20260131'
+mdfind 'kMDItemFSName == "facebook_leads*"'
+
+# 真檔的追蹤狀態（在 lixin-mail-system-frontend 底下跑）
+git ls-files --error-unmatch facebook_leads_full_20260423
+git check-ignore -v facebook_leads_full_20260423
+git log --all --oneline -- '*facebook_leads*'
+
+# repo 可見性
+gh repo view HaloEpoch/lixin-mail-system-frontend --json visibility
+gh repo view HaloCap/haloproject-purchase-notice   --json visibility</code></pre>
+</details>
+
+<h3>1.4 順手發現的兩件事（都不在這個 repo，但既然看到了）</h3>
+
+<ul>
+  <li><strong><code>~/Downloads</code> 有兩份廣告名單匯出檔</strong>（約 11 KB 與 50 KB，
+    檔名帶 <code>_Leads_</code> 與日期區間，其中一份含客戶／活動名稱）。
+    不在任何 git repo 底下，所以沒有版控外洩風險，純粹是保管問題：
+    下載資料夾是最不該長期放名單的地方。</li>
+  <li><strong>lixin 那個 PRIVATE repo 有一份「被追蹤」的 CSV</strong>：
+    <code>docs/INCIDENTS/evidence/…-lead-level.csv</code>，129 列、4 欄。
+    我用本次寫的守門掃過，欄位是
+    <code>lead_id</code> / <code>fb_created_date</code> / <code>in_bq</code> / <code>in_platform_before_fix</code>——
+    <strong>假名化的 ID 與布林值，沒有姓名、Email、電話</strong>。
+    以事故佐證來說是合格的做法（存 ID 不存人）。<span class="tag t-ok">可接受</span></li>
+</ul>
+
+
+<h2>二、這個 PUBLIC repo 現在乾不乾淨</h2>
+
+<div class="callout c-ok">
+  <p class="verdict">程式與文字內容：乾淨。圖片 metadata：不乾淨。</p>
+  <p>27 個檔案、1,029 行、全歷史 145 個 git 物件，逐一掃過。
+  沒有 Email、沒有電話、沒有身分證字號、沒有 API key、沒有追蹤碼、沒有後台網址。
+  <strong>唯一的實質發現埋在圖片的 XMP metadata 裡，而且它牽涉到第三人的真實姓名。</strong></p>
+</div>
+
+<h3>2.1 對外事實</h3>
+
+<div class="panel">
+  <dl class="kv">
+    <dt>可見性</dt><dd><span class="tag t-bad">PUBLIC</span></dd>
+    <dt>建立 / 最後 push</dt><dd>2025-05-13 / 2026-02-28（約 190 天沒動）</dd>
+    <dt>star / fork</dt><dd class="num">0 / 0 · 未封存 · <strong>Issues 開著</strong></dd>
+    <dt>GitHub Pages</dt><dd><span class="tag t-warn">live</span> <code>https://halocap.github.io/haloproject-purchase-notice/</code></dd>
+    <dt>Pages 來源</dt><dd>分支 <strong><code>develop</code></strong> 的 <code>/docs</code>，無自訂網域，強制 HTTPS</dd>
+    <dt>內容規模</dt><dd class="num">27 檔 / 1,029 行文字 + 14 張 PNG + 1 張 JPG</dd>
+  </dl>
+</div>
+
+<div class="callout c-warn">
+  <p><strong>預設分支是空的，這件事值得單獨拿出來講。</strong></p>
+  <p><code>main</code> 停在 <code>1200a62 Initial commit</code>——只有一個 29 bytes 的 README，
+  <strong>沒有 <code>docs/</code>、沒有任何頁面</strong>。全部 22 個 commit 的內容都在 <code>develop</code>。</p>
+  <p>兩個後果：</p>
+  <ul style="margin-bottom:0">
+    <li><strong>形象</strong>：任何人在 GitHub 上打開這個 public repo，看到的是一個
+      「空 repo ＋ 一行只寫了 repo 名稱的 README」。它現在對外呈現的不是「一個產品頁」，
+      而是「一個被放棄的空殼」。</li>
+    <li><strong>操作</strong>：Pages 服務的是 <code>develop</code>。
+      任何人（包括未來的自己）以為「改 <code>main</code> 就會上線」，都會改到一個沒人看的分支。
+      這個稽核分支從 <code>develop</code> 開出來，所以它反映的是真正上線的那一份。</li>
+  </ul>
+</div>
+
+<h3>2.2 掃描結果</h3>
+
+<table>
+  <thead><tr><th>掃描項目</th><th>範圍</th><th>結果</th></tr></thead>
+  <tbody>
+    <tr><td>Email</td><td>全檔 + 全歷史 blob</td><td><span class="tag t-ok">0</span></td></tr>
+    <tr><td>電話（手機／市話）</td><td>全檔 + 全歷史 blob</td><td><span class="tag t-ok">0</span></td></tr>
+    <tr><td>身分證字號</td><td>全檔 + 全歷史 blob</td><td><span class="tag t-ok">0</span></td></tr>
+    <tr><td>API key / token / 私鑰</td><td>全檔 + 全歷史 blob</td><td><span class="tag t-ok">0</span></td></tr>
+    <tr><td>GTM / GA4 / UA / Pixel / 廣告帳號 ID</td><td>全檔</td><td><span class="tag t-ok">0</span>　這頁<strong>完全沒有埋任何追蹤碼</strong></td></tr>
+    <tr><td>後台 / 管理介面網址</td><td>全檔</td><td><span class="tag t-ok">0</span></td></tr>
+    <tr><td>外部連結</td><td>全檔</td><td><span class="tag t-ok">11 個，全部是公開品牌頁</span></td></tr>
+    <tr><td>圖片 EXIF / GPS / 相機</td><td>15 張圖</td><td><span class="tag t-ok">0</span>　無 GPS、無機身、無本機路徑、無原始檔名</td></tr>
+    <tr><td>圖片 XMP metadata</td><td>15 張圖</td><td><span class="tag t-bad">14 張命中</span>　見 2.3</td></tr>
+    <tr><td>歷史中已刪除的檔案</td><td>全部 23 個 commit</td><td><span class="tag t-ok">0</span>　見 2.4</td></tr>
+  </tbody>
+</table>
+
+<h4>外連清單（全部確認為公開資源）</h4>
+<p class="muted">
+  <code>haloepoch.com</code> 的商店與說明頁 ×8 ·
+  <code>instagram.com/haloproject__</code>（公開品牌帳號）×2 ·
+  <code>lin.ee/…</code>（LINE 官方帳號短網址）×2 ·
+  <code>cdn.tailwindcss.com</code> ×1。
+  沒有任何一個指向後台、測試環境或內部工具。
+</p>
+
+<h4>前端行為</h4>
+<p><code>docs/customized/scripts.js</code>（112 行）是<strong>純前端</strong>：
+沒有 <code>fetch</code>、沒有 <code>XMLHttpRequest</code>、沒有表單 <code>action</code>、沒有任何後端端點。
+使用者在客製化表單填的偏好（預算、水晶、MBTI 等）只會被組成一段文字
+<strong>複製到剪貼簿</strong>，由使用者自己貼給客服。
+<span class="tag t-ok">沒有蒐集，就沒有保管責任</span>——以一個公開表單來說，這個設計是對的。</p>
+
+<h3>2.3 唯一的實質發現：圖片 XMP 裡的第三人姓名</h3>
+
+<div class="callout c-bad">
+  <p><strong><code>docs/assets/</code> 底下 14 張 PNG，每一張都嵌著同一組 XMP metadata：</strong></p>
+  <ul>
+    <li><code>pdf:Author</code> = <strong>專案擁有者的真實姓名</strong>（＝你本人）</li>
+    <li><code>xmp:CreatorTool</code> = Canva，內含
+      <code>doc=</code>（4 個不同的設計檔 ID）、
+      <code>user=UAFL4****</code>（<strong>穩定的 Canva 帳號識別碼</strong>，14 張全部相同）</li>
+    <li><code>brand=陳** 的團隊</code> — <strong>一位第三人的真實中文全名</strong></li>
+  </ul>
+  <p style="margin-bottom:0">這一條才是有意義的發現。畫面上完全看不到，
+  但<strong>任何人下載那張圖就讀得到</strong>，而它已經公開躺在 GitHub Pages 上超過半年。</p>
+</div>
+
+<p>三個層次的風險，由重到輕：</p>
+<ol>
+  <li><strong>第三人姓名</strong>（<code>brand=</code>）。這是唯一牽涉到「不是你自己」的個資。
+    當事人多半不知道自己的本名被嵌在 14 張對外公開的圖裡。這是本次查核唯一一則
+    「該通知當事人」等級的發現。</li>
+  <li><strong>Canva 帳號 ID</strong>（<code>user=</code>）。不是憑證、不能拿來登入，
+    但它是一個<strong>跨檔案穩定的關聯識別碼</strong>——
+    任何在別處（其他網站、其他品牌、外包交付物）拿到同樣 ID 的人，
+    可以把這些資產串成同一個作者。</li>
+  <li><strong>本名作者標記</strong>（<code>pdf:Author</code>）。把品牌頁的設計資產直接綁到個人本名。
+    自己的名字自己決定，但值得知道它在那裡。</li>
+</ol>
+
+<p><code>logo.jpg</code> 的情況不同也較輕：Adobe Illustrator 24.3 (Windows)、
+2025-04-02 的建立／修改時間、以及一組文件 UUID。<strong>沒有人名、沒有本機路徑。</strong>
+<span class="tag t-warn">低風險</span></p>
+
+<div class="callout c-info">
+  <p><strong>我沒有動這些圖。</strong>洗掉 metadata 會重寫 14 個二進位檔、改變 Pages 上的實際內容，
+  而本次授權是唯讀稽核。處理方式列在第五節，由你決定。</p>
+</div>
+
+<details>
+  <summary>自行復現（不需要 exiftool，用內建 Python 就行）</summary>
+<pre><code>cd docs/assets
+python3 - &lt;&lt;'PY'
+import glob
+from PIL import Image
+for f in sorted(glob.glob('*.png') + glob.glob('*.jpg')):
+    xmp = Image.open(f).info.get('XML:com.adobe.xmp', '')
+    for line in xmp.splitlines():
+        if any(k in line for k in ('Author', 'CreatorTool')):
+            print(f, '|', line.strip())
+PY</code></pre>
+  <p class="muted" style="margin-bottom:0">沒有 Pillow 的話，<code>strings 檔名.png | head -60</code> 也看得到同樣的東西。</p>
+</details>
+
+<h3>2.4 git 歷史：沒有可還原的殘留</h3>
+
+<p>這一節的結論比一般情況強，因為它不是「掃過沒找到」，而是「結構上不可能有」：</p>
+
+<ul>
+  <li><code>git log --all --diff-filter=D</code> → <strong>完全空的</strong>。
+    這個 repo 從第一個 commit 到現在<strong>沒有刪過任何一個檔案</strong>。</li>
+  <li><code>git rev-list --objects --all</code> 列出的 33 個路徑，
+    與現在工作目錄的檔案集合<strong>完全一致</strong>——沒有任何「曾經存在、後來消失」的路徑。</li>
+  <li>145 個 git 物件的<strong>內容</strong>也逐一 grep 過
+    （Email／電話／身分證／<code>api_key</code>／<code>secret</code>／<code>BEGIN … PRIVATE KEY</code>）
+    → 零命中。</li>
+  <li>最大的 blob 是 1.0 MB 的 <code>steel.png</code>。沒有任何資料檔進來過。</li>
+</ul>
+
+<div class="callout c-ok">
+  <p style="margin:0"><strong>不需要重寫歷史，不需要 BFG，不需要 force push。</strong>
+  沒有任何 commit hash 需要列進「待清理」清單——因為沒有東西需要清理。
+  唯一「藏在看不見的地方」的東西是 2.3 的圖片 metadata，而那些圖<strong>現在還在</strong>，
+  不是歷史殘留，是<strong>現行內容</strong>。</p>
+</div>
+
+<h3>2.5 形象問題：README 29 bytes</h3>
+
+<p><code>README.md</code> 全文就是一行 <code>#</code> 加上 repo 名稱。搭配 2.1 講的
+「<code>main</code> 分支是空的」，這個公開 repo 現在對外呈現的是：</p>
+
+<div class="panel" style="text-align:center;color:var(--ink-soft)">
+  一個屬於某家公司組織帳號、沒有說明、沒有內容、<br>
+  最後更新在半年前的空 repo。
+</div>
+
+<p>這不是安全問題，是<strong>可信度</strong>問題。任何看過 <code>HaloCap</code> 這個組織的人
+（潛在合作方、應徵者、投資方）點進來，得到的印象是「這裡的東西沒有在維護」。
+而諷刺的是，它<strong>底下的內容其實是完整可用的</strong>，只是藏在 <code>develop</code>。
+兩個修法二選一：把 <code>develop</code> 併回 <code>main</code>，或把 README 寫成
+「這是什麼、線上網址在哪、內容在 develop」三行字。</p>
+
+
+<h2>三、我修了什麼</h2>
+
+<p>兩個 commit，都在 <code>audit/pii</code> 分支上，沒有碰 <code>main</code> / <code>develop</code>。</p>
+
+<h3>3.1 <code>.gitignore</code>（本來完全沒有）</h3>
+
+<p>這個 repo 到今天為止<strong>連一個 <code>.gitignore</code> 都沒有</strong>。
+對一個 PUBLIC repo 來說，這代表任何一次 <code>git add -A</code> 都是全押。</p>
+
+<p>擋的東西分四類：表格與資料匯出、資料夾、憑證與環境變數、notebook checkpoint。
+其中最重要的一條是這個：</p>
+
+<pre><code># 無副檔名的匯出檔也要擋：Meta/Ads 後台下載常常沒有副檔名
+*leads*
+*_leads_*
+*export*
+*_dump_*
+*名單*</code></pre>
+
+<p>這條規則是<strong>照著第一節那個真實檔案的形狀寫的</strong>。
+只擋 <code>*.csv</code> 的規則對 <code>facebook_leads_full_20260423</code> 是完全無效的。
+已實測驗證：</p>
+
+<pre><code>$ git check-ignore -v sample_leads_full_20260423 sample.csv notes.md
+.gitignore:26:*_leads_*   sample_leads_full_20260423
+.gitignore:8:*.csv        sample.csv
+# notes.md 沒被列出 → 正常檔案不受影響</code></pre>
+
+<h3>3.2 <code>.githooks/pii_guard.py</code> + <code>.githooks/pre-commit</code></h3>
+
+<p>零依賴（只用 Python 3 標準函式庫，沒有 pip、沒有 husky、沒有 pre-commit framework）。
+三個設計上的堅持：</p>
+
+<h4>① 看的是暫存區，不是工作目錄</h4>
+<p>用 <code>git show :&lt;path&gt;</code> 讀內容。會被 commit 的是暫存區那一份，
+守門就該看那一份——不然 <code>git add</code> 之後再改檔案就能繞過。</p>
+
+<h4>② 表格偵測刻意不只看副檔名</h4>
+<p>對每個文字檔嗅探分隔符號一致性。無副檔名的 CSV 一樣會被認出來——
+這條規則存在的理由就是第一節那個檔案。超過 50 列即攔截。</p>
+
+<h4>③ 命中一律遮蔽後才輸出</h4>
+<p>守門的錯誤訊息會進 terminal、進 CI log、進截圖。
+如果它照抄命中的個資，它本身就是第二次外洩。</p>
+
+<h4>④ 母體斷言 —— 這條是重點</h4>
+
+<div class="callout c-warn">
+  <p><strong>一支只比差集的守門，在掃描目標變空時會「誠實地回報通過」。</strong>
+  它沒有說謊，它只是瞎了——而且瞎掉的樣子跟健康的樣子一模一樣，都是綠燈。</p>
+  <p style="margin-bottom:0">所以這支守門<strong>每一次執行</strong>都先驗證自己，三項任一不成立就 <code>exit 1</code>：</p>
+</div>
+
+<table>
+  <thead><tr><th>斷言</th><th>失敗時的訊息</th><th>它防的是什麼</th></tr></thead>
+  <tbody>
+    <tr><td>規則數 &ge; 7</td><td>規則母體縮小了</td><td>有人「順手清理」刪掉了規則</td></tr>
+    <tr><td>自我測試全數命中</td><td>偵測器壞了</td><td>正規表示式被改壞，靜靜不再命中</td></tr>
+    <tr><td>暫存檔案數 == 實際處理數</td><td><strong>視野縮小了</strong></td><td>有檔案被靜默跳過（讀不到、編碼錯誤）卻仍放行</td></tr>
+  </tbody>
+</table>
+
+<p>另外，<code>pre-commit</code> 那層 shell 也拒絕在找不到 <code>python3</code>
+或找不到守門檔時「假裝通過」——<strong>守門跑不起來就不該算通過</strong>。</p>
+
+<h3>3.3 反向驗證：實際塞假資料進去，確認它會紅</h3>
+
+<p>不是宣稱它會擋，是<strong>實跑一次完整的 <code>git commit</code></strong>。
+用的是自己編的假資料，不是任何真實號碼。兩份探針：</p>
+
+<ol>
+  <li>一個文字檔，內含一組虛構的手機號碼</li>
+  <li>一個<strong>沒有副檔名</strong>、61 列的假名單（3 欄，全部是 <code>example.invalid</code> 網域的假 Email
+    與虛構號碼）——刻意模仿第一節那個真實檔案的形狀</li>
+</ol>
+
+<p>結果（號碼與 Email 由守門自己遮蔽後輸出）：</p>
+
+<pre><code>$ git commit -m "測試：守門應該擋下這一筆"
+
+╭─ PII 守門攔下了這次 commit ──────────────────────────────
+│  [TABULAR_DATA] guard_probe_export
+│      看起來是表格，約 61 列（上限 50）
+│  [EMAIL] guard_probe_export:2
+│      fa*******************
+│  [TW_MOBILE] guard_probe_export:2
+│      09**********
+│  [TW_MOBILE] guard_probe_phone.txt:1
+│      09**********
+│
+│  這個 repo 是 PUBLIC —— push 出去就收不回來了。
+│  確定是誤判的話：git commit --no-verify（請先想三秒）
+╰────────────────────────────────────────────────────────
+
+&gt;&gt;&gt; commit exit=1
+$ git log --oneline -1
+78c0e96 add          ← HEAD 沒有移動，commit 確實沒有發生</code></pre>
+
+<p>三件事同時被證明了：</p>
+<ul>
+  <li>hook <strong>真的被 git 觸發</strong>（不只是腳本自己跑得動）</li>
+  <li><strong>無副檔名的表格被認出來了</strong>——這正是真實檔案的形狀</li>
+  <li>輸出<strong>沒有洩漏任何原文</strong>，連假資料都是遮蔽的</li>
+</ul>
+<p class="muted">兩份探針事後已從索引移除並刪除，不在任何 commit 裡。</p>
+
+<h4>另一個方向也驗了：守門不會誤傷自己</h4>
+<p>守門的原始碼裡有 <code>token</code>、<code>secret</code>、<code>password</code> 這些字，
+還有各種號碼樣式的正規表示式。天真的寫法會讓守門<strong>攔下自己</strong>，
+而通常的解法是加一條「路徑白名單」放自己過——<strong>但白名單正是守門變瞎的第一步</strong>。</p>
+<p>這裡改用兩個手段避開：密鑰規則要求「有引號、8 字元以上的值」才算命中；
+自我測試的假資料用字串拼接組出來，字面上不出現完整樣式。
+所以<strong>沒有任何路徑豁免</strong>，守門掃自己時一樣是全額檢查——實測 3 個檔案全過。</p>
+
+<details>
+  <summary>已知的誤判方向（拿真實資料校準過）</summary>
+  <p>我拿 lixin 那份 129 列的事故佐證 CSV 當外部樣本跑過守門。
+  結果：正確攔下（表格超列），但另外有 <strong>5 筆 <code>CREDIT_CARD</code> 誤判</strong>——
+  那些是很長的數字型 lead ID，剛好通過了 Luhn 檢查（約 1/10 機率，符合預期）。</p>
+  <p style="margin-bottom:0">這是<strong>刻意選的方向</strong>：守門寧可多攔，不可漏放。
+  誤判的成本是打一次 <code>--no-verify</code>，漏放的成本是一份公開的名單。
+  但知道它會在「長數字 ID」上吵，可以省下未來 debug 的時間。</p>
+</details>
+
+<h3>3.4 外連補上 <code>noreferrer</code></h3>
+
+<p>工作區規範寫明「所有 <code>window.open()</code> 必須加 <code>noopener,noreferrer</code>」，
+但這個 repo 只給了 <code>noopener</code>；<code>docs/index.html</code> 與
+<code>_includes/common-block.html</code> 的 6 個外連 <code>&lt;a target="_blank"&gt;</code>
+連 <code>rel</code> 都沒有。<code>docs/customized/index.html</code> 本來就寫對了，沒動。</p>
+<p class="muted">實質風險低（這頁沒有敏感網址可洩），修它是為了讓實作跟自己寫下的規範一致。</p>
+
+<h3>3.5 安裝方式（每台機器一次）</h3>
+<pre><code>cd haloproject-purchase-notice
+git config core.hooksPath .githooks
+
+# 隨時可以單獨驗證守門本身還活著
+python3 .githooks/pii_guard.py --selftest</code></pre>
+<p class="muted">
+  <strong>沒有加 <code>.github/workflows/</code>。</strong>
+  這是本地端的 hook，不會產生任何 CI 通知信。
+</p>
+
+
+<h2>四、我沒有做、也不該由我做的事</h2>
+
+<ul>
+  <li>沒有重寫 git 歷史（也不需要——見 2.4）</li>
+  <li>沒有改 repo 可見性</li>
+  <li>沒有刪除任何檔案</li>
+  <li>沒有洗掉圖片 metadata（會改變 14 個上線中的二進位檔）</li>
+  <li>沒有碰 <code>main</code> / <code>develop</code>，沒有開 PR</li>
+  <li>沒有部署、沒有跑雲端 CLI、沒有打任何營運 API</li>
+  <li>沒有改根目錄的 <code>CLAUDE.md</code>（那是跨 repo 的共用文件，不該由一次單 repo 稽核順手改掉）</li>
+</ul>
+
+
+<h2>五、只有你能決定的</h2>
+
+<div class="decision">
+  <h3>決策 1 ·  這個 repo 該不該刪 <span class="tag t-info">我的判斷：先不要刪</span></h3>
+
+  <p><strong>CTO 的建議是直接刪，理由是 90 天 0 commit、112 行、已無活動。
+  我不同意，而且理由不是感情因素，是指標選錯了。</strong></p>
+
+  <p>先更正兩個數字：實際是 <strong>27 個檔案、1,029 行</strong>（112 行是
+  <code>scripts.js</code> 單一檔案的行數），最後活動距今約 190 天而非 90 天。
+  如果刪除決策是建立在「只有 112 行」上，那個前提是錯的。</p>
+
+  <p><strong>更重要的是：這不是程式碼，是上線中的客服內容。</strong>
+  它是一頁「購買須知＋客製化需求表單」。一頁靜態說明頁 190 天沒有 commit，
+  這是<strong>正常且健康</strong>的——說明沒變，頁面就不該變。
+  用 commit 頻率去判斷一份說明文件是否還活著，等於用「這份合約多久沒改」
+  去判斷它是否還有效。</p>
+
+  <p><strong>真正該問的問題不是「它還有沒有在動」，是「還有沒有人在用」。
+  而那個答案不在磁碟上。</strong></p>
+
+  <p>我查過了：整個 halo 工作區<strong>沒有任何一個地方連向</strong>
+  <code>halocap.github.io/haloproject-purchase-notice</code>
+  （<code>grep -rn 'halocap.github.io'</code> 零命中）。
+  但這只證明<strong>程式碼裡</strong>沒有連結。這種網址最可能待的地方，
+  剛好全部都不在版控裡。</p>
+
+  <h4>刪之前必須先確認的五件事（由最可能到最不可能）</h4>
+  <ol>
+    <li><strong>IG bot 的自動回覆規則。</strong>
+      <code>halo-ig-bot</code> 的 <code>rules</code> 資料表——關鍵字觸發 DM 最常回的就是
+      「購買須知」這種連結。<strong>這是最可能的藏匿處，先查這個。</strong></li>
+    <li><strong>EasyStore 後台。</strong>商品描述、頁面、FAQ 裡有沒有貼這個網址。
+      要去 ES 後台搜 <code>halocap.github.io</code>，repo 裡搜不到。</li>
+    <li><strong>LINE 官方帳號。</strong>圖文選單、自動回覆、歡迎訊息。</li>
+    <li><strong>GitHub Pages 流量。</strong>Repo → Insights → Traffic。
+      <span class="tag t-warn">只留 14 天</span>——要看就現在看，
+      拖過兩週就永遠不知道它有沒有人在用了。</li>
+    <li><strong>IG 個人檔案連結、限動精選、舊貼文</strong>裡的短網址。</li>
+  </ol>
+
+  <h4>我建議的階梯（成本由低到高）</h4>
+  <ol>
+    <li><strong>現在就做，零成本：把 repo 設成 archived。</strong>
+      變唯讀、GitHub 明確標示「不再維護」、<strong>Pages 繼續服務</strong>（archived repo 的 Pages 不會停）。
+      解決了「看起來像沒人管的空殼」的形象問題，而且不會讓任何人的連結 404。
+      隨時可以解除。<strong>這一步不需要先查上面五件事。</strong></li>
+    <li><strong>順手做：把 README 補成三行</strong>（這是什麼、線上網址、內容在 develop），
+      或把 <code>develop</code> 併回 <code>main</code>。目前打開 repo 首頁是空的。</li>
+    <li><strong>要收掉的話：先搬再轉址，最後才刪。</strong>
+      內容搬到 <code>haloepoch.com</code> 對應頁面（那兩頁本來就存在，這頁自己還連過去），
+      Pages 留一個 meta refresh 轉址跑三個月，確認流量歸零再刪。</li>
+    <li><strong>直接刪：只有在上面五項全部確認乾淨之後。</strong></li>
+  </ol>
+
+  <p><strong>一句話：直接刪省下的是 0 元（public repo 與 Pages 都免費），
+  賠上的是一個客戶點下去會 404 的連結。這筆帳不划算。</strong>
+  Archive 拿到了刪除想要的全部好處（明確標示不維護、不再是活躍門面），
+  卻沒有付出任何代價。</p>
+</div>
+
+<div class="decision">
+  <h3>決策 2 ·  圖片 metadata 要不要洗</h3>
+  <p><strong>牽涉第三人姓名，我建議洗，而且這是本報告唯一一則「時間敏感」的發現。</strong>
+  當事人多半不知道自己的本名嵌在 14 張公開的圖裡。</p>
+  <p>三個選項：</p>
+  <ul>
+    <li><strong>洗掉重新 commit</strong>（推薦）。用 Pillow 重存即可清除 XMP，
+      畫面完全不變，一個 commit 解決。要注意 metadata 仍會留在 git 歷史裡——
+      但 repo 是 public，歷史本來就人人可讀，所以<strong>要徹底清除得重寫歷史</strong>。
+      考量到內容只是姓名而非憑證，我認為<strong>清現況就夠了</strong>，不值得為此 force push。</li>
+    <li><strong>連同決策 1 一起刪掉整個 repo</strong>——如果決定收掉，這題自動解決。</li>
+    <li><strong>不處理</strong>。如果 <code>brand=</code> 那位就是共同創辦人本人、且知情不介意，
+      那這就是一個可接受的風險。<strong>但這個判斷要她自己做，不是替她做。</strong></li>
+  </ul>
+  <p class="muted">未來預防：Canva 匯出的圖一律先過一次去除 metadata 再放進任何 public repo。
+  這件事守門擋不住——二進位檔的 XMP 不在文字掃描範圍內。</p>
+</div>
+
+<div class="decision">
+  <h3>決策 3 ·  要輪替哪把 token</h3>
+  <p><strong>沒有。這是一個乾淨的否定答案。</strong></p>
+  <p>這個 repo 的現行內容與全部 145 個歷史物件裡，
+  <strong>沒有任何 API key、token、私鑰或憑證</strong>。沒有東西外洩，
+  所以沒有東西需要輪替。</p>
+  <p>唯一像識別碼的東西是圖片裡的 Canva <code>user=</code> ID，
+  但它<strong>不是憑證</strong>——不能拿來登入、不能授權任何操作，
+  換掉它也沒有意義（它綁的是帳號本身）。它的問題是關聯性，不是權限，
+  處理方式屬於決策 2。</p>
+</div>
+
+<div class="decision">
+  <h3>決策 4 ·  根目錄 <code>CLAUDE.md</code> 要不要修</h3>
+  <p>我沒有改它——那是跨 repo 的共用文件，不該由一次單 repo 的稽核順手改掉。但它現在是錯的，
+  而且錯的方式有風險：<strong>它把另一個客戶（lixin）的專案結構寫進了 Halo 自家 repo 的描述裡</strong>。</p>
+  <p>加上今天已經查證的「描述了 3 個不存在的 repo、漏掉 11 個存在的」，
+  這份文件目前的<strong>準確率低到不該被當成事實來源</strong>。
+  對 AI 助理來說這特別危險——它們會照著文件去找東西，
+  找不到就自己補一個合理的說法，於是錯誤會被複製到下一份文件裡。
+  這次的 <code>facebook_leads_full_20260131.csv</code> 就是這樣的產物：
+  一個從未存在、但被反覆引用的檔名。</p>
+  <p><strong>建議：把 <code>haloproject-purchase-notice</code> 那段整段換成一行事實</strong>——
+  「靜態購買須知頁，Jekyll + GitHub Pages，來源分支 develop，無後端、無資料檔」。
+  lixin 的部分要不要另外記錄是另一個問題，但它<strong>不該記在 Halo 的架構圖裡</strong>。</p>
+</div>
+
+<div class="decision">
+  <h3>決策 5 ·  那份 14&nbsp;MB 名單的保管</h3>
+  <p>目前狀態是安全的（PRIVATE repo、未追蹤、已被 ignore、從未提交）。
+  但它<strong>只靠一行 <code>.gitignore</code> 撐著</strong>，而且躺在 repo 工作目錄的正中央。</p>
+  <p>成本最低的補強，照效益排序：</p>
+  <ol>
+    <li><strong>把它移出 repo 目錄</strong>（例如 <code>~/private-data/</code>）。
+      一個檔案不在 repo 底下，就沒有任何 git 操作能意外收錄它。這一步最有效。</li>
+    <li><strong>把同一支守門裝到 lixin 那個 repo</strong>。<code>.gitignore</code> 只擋住「你沒有 <code>-f</code>」的情況；
+      守門連 <code>git add -f</code> 之後也還會攔。</li>
+    <li><strong>訂一個保存期限</strong>。一份 2026-04 的完整名單，到今天（2026-09）還需要留在筆電上嗎？
+      不再需要的個資，刪掉是最徹底的防護——沒有任何守門比「檔案不存在」更可靠。</li>
+    <li><code>~/Downloads</code> 那兩份小的名單匯出檔，一併處理。</li>
+  </ol>
+</div>
+
+
+<footer>
+  <p>稽核範圍：<code>haloproject-purchase-notice</code> 全部 27 個檔案、23 個 commit、145 個 git 物件、
+  15 張圖片；外加全機器搜尋以定位 <code>CLAUDE.md</code> 所描述的資產。</p>
+  <p>本報告不含任何未經遮蔽的個人資料。<br>
+  分支 <code>audit/pii</code> · 2026-09-06</p>
+</footer>
+
+</div>
+</body>
+</html>

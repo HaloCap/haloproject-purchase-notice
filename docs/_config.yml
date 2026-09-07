@@ -1,1 +1,7 @@
 title: HALO 購買須知
+
+# 內部稽核報告不對外發佈。
+# 這個 repo 的 Pages 來源是 develop 分支的 /docs，所以放在 docs/ 底下的
+# 任何檔案預設都會變成公開網址。exclude 讓 Jekyll 不要把它複製進 _site。
+exclude:
+  - pii-audit-2026-09.html
