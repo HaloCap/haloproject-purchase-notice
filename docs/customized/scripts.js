@@ -2,7 +2,7 @@
 document.querySelectorAll('a.external-link').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();                     // 阻止原本行為
-      window.open(a.href, '_blank', 'noopener');
+      window.open(a.href, '_blank', 'noopener,noreferrer');
     });
 });
 
