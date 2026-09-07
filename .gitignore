@@ -1,0 +1,74 @@
+# ─────────────────────────────────────────────────────────────
+# 這個 repo 是 PUBLIC。任何進到這裡的東西都等於對外發佈。
+# 本檔案擋的是「資料」，不是「程式」。
+# 搭配 .githooks/pii_guard.py（提交前守門）一起用，兩層都要在。
+# ─────────────────────────────────────────────────────────────
+
+# ---- 表格 / 資料匯出（名單外洩的頭號載體）----
+*.csv
+*.tsv
+*.xls
+*.xlsx
+*.xlsm
+*.numbers
+*.parquet
+*.jsonl
+*.ndjson
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.sql.gz
+
+# 無副檔名的匯出檔也要擋：Meta/Ads 後台下載常常沒有副檔名
+# （實例：facebook_leads_full_YYYYMMDD，14MB，純 CSV 但檔名沒有 .csv）
+*leads*
+*_leads_*
+*export*
+*_dump_*
+*名單*
+
+# ---- 資料夾 ----
+data/
+datasets/
+exports/
+dumps/
+raw/
+private/
+tmp/
+.tmp/
+
+# ---- Notebook ----
+*.ipynb_checkpoints
+.ipynb_checkpoints/
+
+# ---- 憑證 / 環境變數 ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*credentials*.json
+*service-account*.json
+*-sa.json
+secrets.*
+.netrc
+
+# ---- 作業系統 / 編輯器 ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*~
+
+# ---- 相依套件 / 建置產物 ----
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+_site/
+.jekyll-cache/

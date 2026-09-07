@@ -1,0 +1,26 @@
+#!/bin/sh
+# 提交前守門。安裝方式（只需一次，每台機器各做一次）：
+#     git config core.hooksPath .githooks
+#
+# 這層只負責找到 python3；真正的邏輯在 pii_guard.py。
+set -e
+
+ROOT=$(git rev-parse --show-toplevel)
+GUARD="$ROOT/.githooks/pii_guard.py"
+
+if [ ! -f "$GUARD" ]; then
+  echo "✗ 找不到 $GUARD —— 守門檔不見了，這件事本身就該擋下來。" >&2
+  exit 1
+fi
+
+if command -v python3 >/dev/null 2>&1; then
+  PY=python3
+elif command -v python >/dev/null 2>&1; then
+  PY=python
+else
+  echo "✗ 這台機器沒有 python3，守門跑不起來。" >&2
+  echo "  守門跑不起來就不該假裝通過。" >&2
+  exit 1
+fi
+
+exec "$PY" "$GUARD"
